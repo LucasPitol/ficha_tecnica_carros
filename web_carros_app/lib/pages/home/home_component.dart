@@ -13,8 +13,9 @@ class HomeComponent extends StatefulWidget {
 
 class _HomeComponentState extends State<HomeComponent> {
   LocalStorageService _localStorageService;
-  List<Auto> autos;
+  List<Auto> favorites;
   bool loadingFavorites;
+  bool loadingNewsAndTrend;
 
   _HomeComponentState() {
     this._localStorageService = LocalStorageService();
@@ -24,6 +25,13 @@ class _HomeComponentState extends State<HomeComponent> {
   void initState() {
     super.initState();
     this._getFavoriteAutos();
+    this._getNews();
+  }
+
+  _getNews() {
+    setState(() {
+      this.loadingNewsAndTrend = true;
+    });
   }
 
   _getFavoriteAutos() {
@@ -31,14 +39,14 @@ class _HomeComponentState extends State<HomeComponent> {
       this.loadingFavorites = true;
     });
 
-    this.autos = [];
+    this.favorites = [];
 
     this._localStorageService.getFavoriteAutos().then((value) {
       if (value == null) {
         // tratar server erro
       } else {
         if (value.success) {
-          this.autos = value.data;
+          this.favorites = value.data;
         } else {
           // tratar erro
         }
@@ -46,6 +54,7 @@ class _HomeComponentState extends State<HomeComponent> {
 
       setState(() {
         this.loadingFavorites = false;
+        this.loadingNewsAndTrend = false;
       });
     });
   }
@@ -91,6 +100,16 @@ class _HomeComponentState extends State<HomeComponent> {
       child: Text(
         title,
         style: Styles.montTextTitle,
+      ),
+    );
+  }
+
+  Widget _createHorizontalCard(Auto item) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 100),
+      child: Text(
+        item.model,
+        style: Styles.montText,
       ),
     );
   }
@@ -161,12 +180,33 @@ class _HomeComponentState extends State<HomeComponent> {
                 children: [
                   _getAppBar(),
                   // News
-                  // _getSectionTitle('Novidades'),
+                  loadingNewsAndTrend
+                      ? Container(
+                          child: LoadingWidget(),
+                        )
+                      : Container(
+                          child: Column(
+                            children: [
+                              _getSectionTitle('Novidades'),
+                              Container(
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: favorites
+                                        .map((item) =>
+                                            _createHorizontalCard(item))
+                                        .toList(),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                   // Favorites
                   _getSectionTitle('Favoritos'),
                   loadingFavorites
                       ? LoadingWidget()
-                      : this.autos.isEmpty
+                      : this.favorites.isEmpty
                           ? Container(
                               margin: EdgeInsets.all(20),
                               child: Text(
@@ -175,7 +215,7 @@ class _HomeComponentState extends State<HomeComponent> {
                               ),
                             )
                           : Column(
-                              children: autos
+                              children: favorites
                                   .map((item) => _createCard(item))
                                   .toList(),
                             ),
