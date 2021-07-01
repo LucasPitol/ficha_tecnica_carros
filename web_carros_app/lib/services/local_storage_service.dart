@@ -87,10 +87,10 @@ class LocalStorageService {
     m4.fipe = 619860.00;
     m4.creationDate = DateTime.now();
 
-    autos.add(m1);
-    autos.add(m2);
-    autos.add(m3);
     autos.add(m4);
+    autos.add(m2);
+    autos.add(m1);
+    autos.add(m3);
 
     await Future.delayed(Duration(milliseconds: 2000), () {
       res.success = true;
