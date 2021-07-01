@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.web_carros_app">
+    package="com.pitol.web_carros_app">
    <application
-        android:label="web_carros_app"
+        android:label="Web Carros"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
