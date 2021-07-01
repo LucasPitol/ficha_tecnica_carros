@@ -14,6 +14,7 @@ class HomeComponent extends StatefulWidget {
 class _HomeComponentState extends State<HomeComponent> {
   LocalStorageService _localStorageService;
   List<Auto> favorites;
+  List<Auto> news;
   bool loadingFavorites;
   bool loadingNewsAndTrend;
 
@@ -31,6 +32,24 @@ class _HomeComponentState extends State<HomeComponent> {
   _getNews() {
     setState(() {
       this.loadingNewsAndTrend = true;
+    });
+
+    this.news = [];
+
+    this._localStorageService.getNews().then((value) {
+      if (value == null) {
+        // tratar server erro
+      } else {
+        if (value.success) {
+          this.news = value.data;
+        } else {
+          // tratar erro
+        }
+      }
+
+      setState(() {
+        this.loadingNewsAndTrend = false;
+      });
     });
   }
 
@@ -54,7 +73,6 @@ class _HomeComponentState extends State<HomeComponent> {
 
       setState(() {
         this.loadingFavorites = false;
-        this.loadingNewsAndTrend = false;
       });
     });
   }
@@ -106,10 +124,61 @@ class _HomeComponentState extends State<HomeComponent> {
 
   Widget _createHorizontalCard(Auto item) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 100),
-      child: Text(
-        item.model,
-        style: Styles.montText,
+      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      child: OpenContainer(
+        openColor: Styles.cardColor,
+        closedColor: Styles.cardColor,
+        closedElevation: 2,
+        closedShape: RoundedRectangleBorder(
+            borderRadius: Styles.defaultCardBorderRadius),
+        onClosed: (val) {
+          // if (refresh) {
+          //   this.updatePageContent();
+          //   this.refresh = false;
+          // }
+          // updateAppBar();
+        },
+        openBuilder: (context, action) {
+          return Container();
+        },
+        closedBuilder: (context, action) {
+          return Container(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            width: 150,
+            height: 160,
+            child: Stack(
+              children: [
+                Container(
+                  child: Image.network(
+                    item.autoImagePath,
+                    fit: BoxFit.cover,
+                    width: 150,
+                  ),
+                ),
+                Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item.brand,
+                        style: Styles.tileTitleTextStyle,
+                      ),
+                      Text(
+                        item.model,
+                        style: Styles.montText,
+                      ),
+                      Text(
+                        item.version,
+                        style: Styles.montTextGrey,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -182,6 +251,7 @@ class _HomeComponentState extends State<HomeComponent> {
                   // News
                   loadingNewsAndTrend
                       ? Container(
+                        height: 227,
                           child: LoadingWidget(),
                         )
                       : Container(
@@ -191,8 +261,12 @@ class _HomeComponentState extends State<HomeComponent> {
                               Container(
                                 child: SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
+                                  physics: BouncingScrollPhysics(),
                                   child: Row(
-                                    children: favorites
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: news
                                         .map((item) =>
                                             _createHorizontalCard(item))
                                         .toList(),
