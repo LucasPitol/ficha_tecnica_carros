@@ -23,6 +23,7 @@ class Styles {
   static Color primaryColor = Colors.amber.shade800; //Color(0xffFF8F00);
   static Color darkColor = Color(0xff744203);
   static Color mainBackgroundColor = Colors.black;
+  static Color cardColor = Color(0xff171717);
 
   static Color mainTextColor = Colors.grey.shade100;
 
@@ -41,6 +42,12 @@ class Styles {
   static TextStyle montTextGrey =
       TextStyle(color: Colors.grey.shade400, fontSize: 14);
 
+  static TextStyle tileTitleTextStyle = TextStyle(
+    color: mainTextColor,
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+  );
+
   static Text appTitle = Text(
     'Web Carros',
     style: GoogleFonts.varela(
@@ -52,4 +59,7 @@ class Styles {
 
   static BorderRadius circularBorderRadius =
       BorderRadius.all(Radius.circular(100));
+
+  static BorderRadius defaultCardBorderRadius =
+      BorderRadius.all(Radius.circular(18));
 }
