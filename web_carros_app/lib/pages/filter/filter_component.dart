@@ -6,6 +6,8 @@ import 'package:web_carros_app/pages/shared/loading_block.dart';
 import 'package:web_carros_app/services/brand_service.dart';
 import 'package:web_carros_app/utils/styles.dart';
 
+import 'select_brand_container.dart';
+
 class FilterComponent extends StatefulWidget {
   final FilterDto previousFilter;
 
@@ -26,6 +28,7 @@ class _FilterComponentState extends State<FilterComponent> {
   _FilterComponentState(this.previousFilter) {
     this._brandService = BrandService();
     this.isShowingSelectBrandContainer = false;
+    this.brandsLoading = false;
     this.brandList = [];
   }
 
@@ -44,6 +47,16 @@ class _FilterComponentState extends State<FilterComponent> {
     });
   }
 
+  selectBrandHandler(String brand) {
+    if (brand != null && brand.isNotEmpty) {
+      setState(() {
+        this.selectedBrand = brand;
+      });
+
+      this.hideSelectBrandContainer();
+    }
+  }
+
   _getBrands() async {
     setState(() {
       this.brandsLoading = true;
@@ -55,6 +68,12 @@ class _FilterComponentState extends State<FilterComponent> {
 
     setState(() {
       this.brandsLoading = false;
+    });
+  }
+
+  hideSelectBrandContainer() {
+    setState(() {
+      this.isShowingSelectBrandContainer = false;
     });
   }
 
@@ -111,6 +130,38 @@ class _FilterComponentState extends State<FilterComponent> {
               child: Column(
                 children: [
                   _getAppBar(),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 10,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      showSelectBrandContainer();
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Marca',
+                            style: Styles.montText,
+                          ),
+                          (selectedBrand == null || selectedBrand.isEmpty)
+                              ? FaIcon(
+                                  FontAwesomeIcons.plus,
+                                  color: Colors.grey.shade400,
+                                  size: 18,
+                                )
+                              : Text(
+                                  selectedBrand,
+                                  style: Styles.montTextGrey,
+                                ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -142,7 +193,10 @@ class _FilterComponentState extends State<FilterComponent> {
               ),
             ),
             LoadingBlock(this.brandsLoading),
-            // SelectBrandContainer(),
+            isShowingSelectBrandContainer
+                ? SelectBrandContainer(this.brandList, this.selectBrandHandler,
+                    hideSelectBrandContainer)
+                : Container(),
           ],
         ),
       ),
