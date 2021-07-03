@@ -2,27 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:web_carros_app/models/brand.dart';
 import 'package:web_carros_app/models/dtos/filterDto.dart';
+import 'package:web_carros_app/pages/shared/loading_block.dart';
 import 'package:web_carros_app/services/brand_service.dart';
 import 'package:web_carros_app/utils/styles.dart';
 
 class FilterComponent extends StatefulWidget {
   final FilterDto previousFilter;
-  final List<Brand> brandList;
 
-  FilterComponent(this.previousFilter, this.brandList);
+  FilterComponent(this.previousFilter);
 
   @override
-  _FilterComponentState createState() =>
-      _FilterComponentState(previousFilter, brandList);
+  _FilterComponentState createState() => _FilterComponentState(previousFilter);
 }
 
 class _FilterComponentState extends State<FilterComponent> {
   final _formKey = GlobalKey<FormState>();
   final FilterDto previousFilter;
-  List<Brand> brandList;
   BrandService _brandService;
+  List<Brand> brandList;
+  bool brandsLoading;
 
-  _FilterComponentState(this.previousFilter, this.brandList) {
+  _FilterComponentState(this.previousFilter) {
     this._brandService = BrandService();
   }
 
@@ -33,15 +33,19 @@ class _FilterComponentState extends State<FilterComponent> {
   }
 
   _getBrands() {
-    if (brandList == null || brandList.isEmpty) {
-      this._brandService.getBrands().then((value) {
-        if (value.success) {
-          setState(() {
-            this.brandList = value.data;
-          });
-        }
-      });
-    }
+    setState(() {
+      this.brandsLoading = true;
+    });
+
+    this._brandService.getBrands().then((value) {
+      if (value.success) {
+        this.brandList = value.data;
+        
+        setState(() {
+          this.brandsLoading = false;
+        });
+      }
+    });
   }
 
   _goBack() {
@@ -129,6 +133,7 @@ class _FilterComponentState extends State<FilterComponent> {
                 ),
               ),
             ),
+            LoadingBlock(this.brandsLoading),
           ],
         ),
       ),
