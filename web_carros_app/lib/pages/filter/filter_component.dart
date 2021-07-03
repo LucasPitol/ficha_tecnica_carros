@@ -16,35 +16,45 @@ class FilterComponent extends StatefulWidget {
 }
 
 class _FilterComponentState extends State<FilterComponent> {
-  final _formKey = GlobalKey<FormState>();
   final FilterDto previousFilter;
   BrandService _brandService;
   List<Brand> brandList;
   bool brandsLoading;
+  bool isShowingSelectBrandContainer;
+  String selectedBrand;
 
   _FilterComponentState(this.previousFilter) {
     this._brandService = BrandService();
+    this.isShowingSelectBrandContainer = false;
+    this.brandList = [];
   }
 
   @override
   void initState() {
     super.initState();
-    this._getBrands();
   }
 
-  _getBrands() {
+  showSelectBrandContainer() async {
+    if (brandList.isEmpty) {
+      await this._getBrands();
+    }
+
+    setState(() {
+      this.isShowingSelectBrandContainer = true;
+    });
+  }
+
+  _getBrands() async {
     setState(() {
       this.brandsLoading = true;
     });
 
-    this._brandService.getBrands().then((value) {
-      if (value.success) {
-        this.brandList = value.data;
-        
-        setState(() {
-          this.brandsLoading = false;
-        });
-      }
+    var res = await this._brandService.getBrands();
+
+    this.brandList = res.data;
+
+    setState(() {
+      this.brandsLoading = false;
     });
   }
 
@@ -112,9 +122,7 @@ class _FilterComponentState extends State<FilterComponent> {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {
-                    if (_formKey.currentState.validate()) {
-                      _applyFilter();
-                    }
+                    _applyFilter();
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Styles.primaryColor,
@@ -134,6 +142,7 @@ class _FilterComponentState extends State<FilterComponent> {
               ),
             ),
             LoadingBlock(this.brandsLoading),
+            // SelectBrandContainer(),
           ],
         ),
       ),

@@ -22,8 +22,7 @@ class _MainComponentState extends State<MainComponent> {
 
   FilterDto filter;
 
-  _MainComponentState() {
-  }
+  _MainComponentState();
 
   @override
   void initState() {
