@@ -63,6 +63,10 @@ class Styles {
   static BorderRadius defaultCardBorderRadius =
       BorderRadius.all(Radius.circular(18));
 
+  static ButtonStyle textButtonStyle = TextButton.styleFrom(
+    primary: Styles.primaryColor,
+  );
+
   static getTextFieldDecorationUnderline(String value) {
     return InputDecoration(
       border: UnderlineInputBorder(),

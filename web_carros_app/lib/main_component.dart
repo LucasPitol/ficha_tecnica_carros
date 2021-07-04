@@ -2,27 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'models/brand.dart';
 import 'models/dtos/filterDto.dart';
 import 'pages/filter/filter_component.dart';
 import 'pages/home/home_component.dart';
+import 'pages/list_autos/list_autos_component.dart';
+import 'utils/constants.dart';
 import 'utils/styles.dart';
 
 class MainComponent extends StatefulWidget {
+
   @override
-  _MainComponentState createState() => _MainComponentState();
+  MainComponentState createState() => MainComponentState();
 }
 
-class _MainComponentState extends State<MainComponent> {
-  final List<Widget> _widgetOptions = <Widget>[
-    HomeComponent(),
-  ];
+class MainComponentState extends State<MainComponent> {
 
-  int _selectedIndex = 0;
+  int _selectedIndex = Constants.home_page_index;
 
   FilterDto filter;
 
-  _MainComponentState();
+  MainComponentState();
 
   @override
   void initState() {
@@ -40,13 +39,36 @@ class _MainComponentState extends State<MainComponent> {
   _openFilter() async {
     FilterDto filtersTemp = await Navigator.push(
       context,
-      MaterialPageRoute(
-          builder: (context) => FilterComponent(filter)),
+      MaterialPageRoute(builder: (context) => FilterComponent(filter)),
     );
 
     if (filtersTemp != null) {
-      print('filter');
+      setState(() {
+        this._selectedIndex = Constants.list_page_index;
+      });
     }
+  }
+
+  _getScreenOption() {
+    switch (this._selectedIndex) {
+      case 0:
+        return HomeComponent();
+        break;
+
+      case 1:
+      return ListAutosComponent(this.filter, this.clearFilters);
+      break;
+
+      default:
+    }
+  }
+
+  clearFilters() {
+    this.filter = null;
+
+    setState(() {
+      this._selectedIndex = Constants.home_page_index;
+    });
   }
 
   @override
@@ -55,7 +77,7 @@ class _MainComponentState extends State<MainComponent> {
       resizeToAvoidBottomInset: true,
       backgroundColor: Styles.mainBackgroundColor,
       body: SafeArea(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: _getScreenOption(),//_widgetOptions.elementAt(_selectedIndex),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
