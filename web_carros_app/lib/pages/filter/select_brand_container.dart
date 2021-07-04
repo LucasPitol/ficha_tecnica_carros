@@ -33,15 +33,23 @@ class _SelectBrandContainerState extends State<SelectBrandContainer> {
         this.selectBrandHandler(item.name);
       },
       child: Container(
+        height: 80,
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               item.name,
               style: Styles.montText,
             ),
-            Container(),
+            Container(
+              child: Image.network(
+                item.brandImgPath,
+                fit: BoxFit.cover,
+                width: 50,
+              ),
+            ),
           ],
         ),
       ),
@@ -95,10 +103,12 @@ class _SelectBrandContainerState extends State<SelectBrandContainer> {
               style: Styles.montText,
             ),
           ),
-          SingleChildScrollView(
-            child: Column(
-              children:
-                  brandListFiltered.map((item) => _createTile(item)).toList(),
+          Flexible(
+            child: SingleChildScrollView(
+              child: Column(
+                children:
+                    brandListFiltered.map((item) => _createTile(item)).toList(),
+              ),
             ),
           ),
         ],
