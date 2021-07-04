@@ -21,10 +21,12 @@ class _SelectBrandContainerState extends State<SelectBrandContainer> {
   final Function selectBrandHandler;
   final Function hideSelectBrandContainerHandler;
   List<Brand> brandListFiltered;
+  TextEditingController brandTextController;
 
   _SelectBrandContainerState(this.brandList, this.selectBrandHandler,
       this.hideSelectBrandContainerHandler) {
     this.brandListFiltered = brandList;
+    this.brandTextController = TextEditingController();
   }
 
   Widget _createTile(Brand item) {
@@ -98,9 +100,12 @@ class _SelectBrandContainerState extends State<SelectBrandContainer> {
         children: [
           _getAppBar(),
           Container(
-            child: Text(
-              'Form',
-              style: Styles.montText,
+            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: TextFormField(
+              style: TextStyle(color: Colors.grey.shade100),
+              controller: brandTextController,
+              textCapitalization: TextCapitalization.words,
+              decoration: Styles.getTextFieldDecorationUnderline('Digite uma marca'),
             ),
           ),
           Flexible(

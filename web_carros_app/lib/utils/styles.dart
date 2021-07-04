@@ -62,4 +62,15 @@ class Styles {
 
   static BorderRadius defaultCardBorderRadius =
       BorderRadius.all(Radius.circular(18));
+
+  static getTextFieldDecorationUnderline(String value) {
+    return InputDecoration(
+      border: UnderlineInputBorder(),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey.shade900),
+      ),
+      labelText: value,
+      labelStyle: TextStyle(color: Colors.grey.shade400),
+    );
+  }
 }
