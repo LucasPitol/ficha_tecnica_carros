@@ -91,6 +91,13 @@ class _SelectBrandContainerState extends State<SelectBrandContainer> {
     );
   }
 
+  _filterBrands(String typed) {
+    setState(() {
+      this.brandListFiltered =
+          this.brandList.where((element) => element.name.contains(typed)).toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -103,9 +110,13 @@ class _SelectBrandContainerState extends State<SelectBrandContainer> {
             margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: TextFormField(
               style: TextStyle(color: Colors.grey.shade100),
+              onChanged: (value) {
+                _filterBrands(value);
+              },
               controller: brandTextController,
               textCapitalization: TextCapitalization.words,
-              decoration: Styles.getTextFieldDecorationUnderline('Digite uma marca'),
+              decoration:
+                  Styles.getTextFieldDecorationUnderline('Digite uma marca'),
             ),
           ),
           Flexible(
