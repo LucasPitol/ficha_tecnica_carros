@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:web_carros_app/models/brand.dart';
 import 'package:web_carros_app/models/dtos/filterDto.dart';
+import 'package:web_carros_app/models/model.dart';
 import 'package:web_carros_app/pages/shared/loading_block.dart';
 import 'package:web_carros_app/services/brand_service.dart';
 import 'package:web_carros_app/utils/styles.dart';
@@ -21,20 +22,46 @@ class _FilterComponentState extends State<FilterComponent> {
   final FilterDto previousFilter;
   BrandService _brandService;
   List<Brand> brandList;
+  List<Model> modelList;
   bool brandsLoading;
+  bool modelsLoading;
   bool isShowingSelectBrandContainer;
-  String selectedBrand;
+  bool isShowingSelectModelContainer;
+  Brand selectedBrand;
+  Model selectedModel;
 
   _FilterComponentState(this.previousFilter) {
     this._brandService = BrandService();
     this.isShowingSelectBrandContainer = false;
+    this.isShowingSelectModelContainer = false;
     this.brandsLoading = false;
     this.brandList = [];
+    this.modelList = [];
   }
 
   @override
   void initState() {
     super.initState();
+  }
+
+  showSelectModelContainer() async {
+    if (modelList.isEmpty) {
+      await this._getModels();
+    }
+
+    setState(() {
+      this.isShowingSelectModelContainer = true;
+    });
+  }
+
+  selectModelHandler(Model model) {
+    if (model != null && model.id != null) {
+      setState(() {
+        this.selectedModel = model;
+      });
+
+      this.hideSelectModelContainer();
+    }
   }
 
   showSelectBrandContainer() async {
@@ -47,14 +74,30 @@ class _FilterComponentState extends State<FilterComponent> {
     });
   }
 
-  selectBrandHandler(String brand) {
-    if (brand != null && brand.isNotEmpty) {
+  selectBrandHandler(Brand brand) {
+    if (brand != null && brand.id != null) {
       setState(() {
         this.selectedBrand = brand;
       });
 
       this.hideSelectBrandContainer();
     }
+  }
+
+  _getModels() async {
+    setState(() {
+      this.modelsLoading = true;
+    });
+
+    String brandId = this.selectedBrand.id;
+
+    var res = await this._brandService.getModelsByBrandId(brandId);
+    print(brandId);
+    this.modelList = res.data;
+
+    setState(() {
+      this.modelsLoading = false;
+    });
   }
 
   _getBrands() async {
@@ -68,6 +111,12 @@ class _FilterComponentState extends State<FilterComponent> {
 
     setState(() {
       this.brandsLoading = false;
+    });
+  }
+
+  hideSelectModelContainer() {
+    setState(() {
+      this.isShowingSelectModelContainer = false;
     });
   }
 
@@ -118,6 +167,10 @@ class _FilterComponentState extends State<FilterComponent> {
     );
   }
 
+  showSelectYearBottomSheet() {
+    print('year');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,7 +185,7 @@ class _FilterComponentState extends State<FilterComponent> {
                   _getAppBar(),
                   SizedBox(
                     width: double.infinity,
-                    height: 10,
+                    height: 20,
                   ),
                   InkWell(
                     onTap: () {
@@ -148,16 +201,80 @@ class _FilterComponentState extends State<FilterComponent> {
                             'Marca',
                             style: Styles.montText,
                           ),
-                          (selectedBrand == null || selectedBrand.isEmpty)
+                          (selectedBrand == null || selectedBrand.id == null)
                               ? FaIcon(
                                   FontAwesomeIcons.plus,
                                   color: Colors.grey.shade400,
                                   size: 18,
                                 )
                               : Text(
-                                  selectedBrand,
+                                  selectedBrand.name,
                                   style: Styles.montTextGrey,
                                 ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                    child: Divider(
+                      color: Colors.grey.shade900,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      showSelectModelContainer();
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Modelo',
+                            style: Styles.montText,
+                          ),
+                          (selectedModel == null || selectedModel.id == null)
+                              ? FaIcon(
+                                  FontAwesomeIcons.plus,
+                                  color: Colors.grey.shade400,
+                                  size: 18,
+                                )
+                              : Text(
+                                  selectedModel.name,
+                                  style: Styles.montTextGrey,
+                                ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                    child: Divider(
+                      color: Colors.grey.shade900,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      showSelectYearBottomSheet();
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Ano',
+                            style: Styles.montText,
+                          ),
+                          Text(
+                            'De 1900 até 2021',
+                            style: Styles.montTextGrey,
+                          ),
                         ],
                       ),
                     ),

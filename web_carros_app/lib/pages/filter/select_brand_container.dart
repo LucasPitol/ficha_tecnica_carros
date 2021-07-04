@@ -32,7 +32,7 @@ class _SelectBrandContainerState extends State<SelectBrandContainer> {
   Widget _createTile(Brand item) {
     return InkWell(
       onTap: () {
-        this.selectBrandHandler(item.name);
+        this.selectBrandHandler(item);
       },
       child: Container(
         height: 80,
