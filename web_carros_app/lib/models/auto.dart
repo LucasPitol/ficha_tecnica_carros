@@ -6,6 +6,7 @@ class Auto {
   String autoImagePath;
   String brandImagePath;
   double fipe;
+  int year;
   DateTime creationDate;
 
   // Auto(DocumentSnapshot doc) {
