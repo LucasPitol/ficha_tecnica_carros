@@ -2,7 +2,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:web_carros_app/models/auto.dart';
 import 'package:flutter/material.dart';
 import 'package:web_carros_app/pages/shared/loading_widget.dart';
+import 'package:web_carros_app/services/auto_service.dart';
+import 'package:web_carros_app/utils/constants.dart';
 import 'package:web_carros_app/utils/styles.dart';
+
+import 'header_info_spec_item.dart';
 
 class OverviewComponent extends StatefulWidget {
   final Auto auto;
@@ -15,10 +19,20 @@ class OverviewComponent extends StatefulWidget {
 
 class _OverviewComponentState extends State<OverviewComponent> {
   Auto auto;
+  AutoService _autoService;
   bool specsLoading;
+  String horsePowerStr;
+  String zeroToHundredStr;
+  String fipeStr;
+  String weightStr;
 
   _OverviewComponentState(this.auto) {
+    this._autoService = AutoService();
     specsLoading = true;
+    horsePowerStr = Constants.empty_string;
+    zeroToHundredStr = Constants.empty_string;
+    fipeStr = Constants.empty_string;
+    weightStr = Constants.empty_string;
   }
 
   @override
@@ -45,11 +59,41 @@ class _OverviewComponentState extends State<OverviewComponent> {
           )
         : Container(
             height: boxHeight,
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      HeaderInfoSpecItem(
+                        FontAwesomeIcons.horseHead,
+                        this.horsePowerStr,
+                      ),
+                      HeaderInfoSpecItem(
+                        FontAwesomeIcons.tachometerAlt,
+                        this.zeroToHundredStr,
+                      ),
+                      HeaderInfoSpecItem(
+                        FontAwesomeIcons.dollarSign,
+                        this.fipeStr,
+                      ),
+                      HeaderInfoSpecItem(
+                        FontAwesomeIcons.weightHanging,
+                        this.weightStr,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           );
   }
 
   _getAutoImgLayout() {
     return Container(
+      margin: EdgeInsets.only(bottom: 20),
       child: Column(
         children: [
           Container(
@@ -148,6 +192,30 @@ class _OverviewComponentState extends State<OverviewComponent> {
   _getAutoSpecs() {
     setState(() {
       this.specsLoading = true;
+    });
+
+    String autoId = this.auto.id;
+
+    this._autoService.getAutoSpecs(autoId).then((value) {
+      if (value == null) {
+        // tratar server erro
+      } else {
+        if (value.success) {
+          var autoSpecsDto = value.data;
+          this.auto.performanceSpecs = autoSpecsDto.performanceSpecs;
+          this.auto.engineSpecs = autoSpecsDto.engineSpecs;
+
+          this.horsePowerStr = autoSpecsDto.engineSpecs.horsePower.toStringAsFixed(0);
+          this.zeroToHundredStr =
+              autoSpecsDto.performanceSpecs.zeroToHundred.toString();
+        } else {
+          // tratar erro
+        }
+      }
+
+      setState(() {
+        this.specsLoading = false;
+      });
     });
   }
 

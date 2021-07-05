@@ -1,3 +1,6 @@
+import 'package:web_carros_app/models/performace_specs.dart';
+import 'package:web_carros_app/models/engine_specs.dart';
+
 class Auto {
   String id;
   String brand;
@@ -8,6 +11,14 @@ class Auto {
   double fipe;
   int year;
   DateTime creationDate;
+
+  PerformanceSpecs performanceSpecs;
+  EngineSpecs engineSpecs;
+
+  Auto() {
+    this.performanceSpecs = PerformanceSpecs();
+    this.engineSpecs = EngineSpecs();
+  }
 
   // Auto(DocumentSnapshot doc) {
   //   Map<String, dynamic> objMapp = doc.data();
