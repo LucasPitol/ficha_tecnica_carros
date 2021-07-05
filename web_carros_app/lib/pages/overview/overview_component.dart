@@ -1,4 +1,5 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:web_carros_app/models/auto.dart';
 import 'package:flutter/material.dart';
 import 'package:web_carros_app/pages/shared/loading_widget.dart';
@@ -6,7 +7,9 @@ import 'package:web_carros_app/services/auto_service.dart';
 import 'package:web_carros_app/utils/constants.dart';
 import 'package:web_carros_app/utils/styles.dart';
 
+import 'engine_box_widget.dart';
 import 'header_info_spec_item.dart';
+import 'performance_box_widget.dart';
 
 class OverviewComponent extends StatefulWidget {
   final Auto auto;
@@ -18,6 +21,10 @@ class OverviewComponent extends StatefulWidget {
 }
 
 class _OverviewComponentState extends State<OverviewComponent> {
+  final _pageViewController = PageController(
+    initialPage: 0,
+  );
+
   Auto auto;
   AutoService _autoService;
   bool specsLoading;
@@ -84,6 +91,52 @@ class _OverviewComponentState extends State<OverviewComponent> {
                         this.weightStr,
                       ),
                     ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 20),
+                  width: double.infinity,
+                  height: 300,
+                  child: PageView(
+                    controller: this._pageViewController,
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      PerformanceBoxWidget(this.auto.performanceSpecs),
+                      EngineBoxWidget(this.auto.engineSpecs, this.auto.version),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        color: Colors.orange,
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        color: Colors.orange,
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  child: SmoothPageIndicator(
+                    controller: _pageViewController,
+                    count: 4,
+                    axisDirection: Axis.horizontal,
+                    onDotClicked: (i) {
+                      _pageViewController.animateToPage(
+                        i,
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.ease,
+                      );
+                    },
+                    effect: WormEffect(
+                      // expansionFactor: 2,
+                      spacing: 8,
+                      radius: 16,
+                      dotWidth: 12,
+                      dotHeight: 12,
+                      // dotColor: Color(0xFF1A1A1B),
+                      dotColor: Colors.grey.shade900,
+                      activeDotColor: Styles.primaryColor,
+                      paintStyle: PaintingStyle.fill,
+                    ),
                   ),
                 ),
               ],
@@ -205,7 +258,8 @@ class _OverviewComponentState extends State<OverviewComponent> {
           this.auto.performanceSpecs = autoSpecsDto.performanceSpecs;
           this.auto.engineSpecs = autoSpecsDto.engineSpecs;
 
-          this.horsePowerStr = autoSpecsDto.engineSpecs.horsePower.toStringAsFixed(0);
+          this.horsePowerStr =
+              autoSpecsDto.engineSpecs.horsePower.toStringAsFixed(0);
           this.zeroToHundredStr =
               autoSpecsDto.performanceSpecs.zeroToHundred.toString();
         } else {

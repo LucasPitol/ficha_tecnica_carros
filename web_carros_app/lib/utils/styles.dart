@@ -73,6 +73,11 @@ class Styles {
     primary: Styles.primaryColor,
   );
 
+  static BoxDecoration specsBoxDecoration = BoxDecoration(
+    color: cardColor,
+    borderRadius:  BorderRadius.all(Radius.circular(24)),
+  );
+
   static getTextFieldDecorationUnderline(String value) {
     return InputDecoration(
       border: UnderlineInputBorder(),
