@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:web_carros_app/models/auto.dart';
+import 'package:web_carros_app/pages/overview/overview_component.dart';
 import 'package:web_carros_app/pages/shared/loading_widget.dart';
 import 'package:web_carros_app/services/local_storage_service.dart';
 import 'package:web_carros_app/utils/styles.dart';
@@ -139,7 +140,7 @@ class _HomeComponentState extends State<HomeComponent> {
           // updateAppBar();
         },
         openBuilder: (context, action) {
-          return Container();
+          return OverviewComponent(item);
         },
         closedBuilder: (context, action) {
           return Container(
@@ -201,7 +202,7 @@ class _HomeComponentState extends State<HomeComponent> {
           // updateAppBar();
         },
         openBuilder: (context, action) {
-          return Container();
+          return OverviewComponent(item);
         },
         closedBuilder: (context, action) {
           return Container(
