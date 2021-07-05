@@ -1,5 +1,7 @@
+import 'package:web_carros_app/models/dimensions_specs.dart';
 import 'package:web_carros_app/models/performace_specs.dart';
 import 'package:web_carros_app/models/engine_specs.dart';
+import 'package:web_carros_app/models/transmission_specs.dart';
 
 class Auto {
   String id;
@@ -14,10 +16,14 @@ class Auto {
 
   PerformanceSpecs performanceSpecs;
   EngineSpecs engineSpecs;
+  TransmissionSpecs transmissionSpecs;
+  DimensionsSpecs dimensionsSpecs;
 
   Auto() {
     this.performanceSpecs = PerformanceSpecs();
     this.engineSpecs = EngineSpecs();
+    this.transmissionSpecs = TransmissionSpecs();
+    this.dimensionsSpecs = DimensionsSpecs();
   }
 
   // Auto(DocumentSnapshot doc) {

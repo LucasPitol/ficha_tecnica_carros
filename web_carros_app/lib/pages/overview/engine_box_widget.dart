@@ -8,7 +8,6 @@ class EngineBoxWidget extends StatelessWidget {
   String horsePowerStr;
   String torqueStr;
   String maxRPMStr;
-  String cylinderCapacityStr;
 
   EngineBoxWidget(this.engineSpecs, this.version) {
     this.horsePowerStr = (engineSpecs.horsePower.toStringAsFixed(0) +
@@ -23,9 +22,6 @@ class EngineBoxWidget extends StatelessWidget {
 
     this.maxRPMStr =
         (engineSpecs.maxRPM.toStringAsFixed(0) + ' rotação máxima');
-
-    this.cylinderCapacityStr =
-        (engineSpecs.cylinderCapacity.toStringAsFixed(0) + ' cm³');
   }
 
   _getRowInfo(String value) {

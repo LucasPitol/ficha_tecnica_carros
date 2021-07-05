@@ -7,7 +7,9 @@ import 'package:web_carros_app/services/auto_service.dart';
 import 'package:web_carros_app/utils/constants.dart';
 import 'package:web_carros_app/utils/styles.dart';
 
+import 'dimensions_box_widget.dart';
 import 'engine_box_widget.dart';
+import 'gear_box_widget.dart';
 import 'header_info_spec_item.dart';
 import 'performance_box_widget.dart';
 
@@ -103,14 +105,8 @@ class _OverviewComponentState extends State<OverviewComponent> {
                     children: [
                       PerformanceBoxWidget(this.auto.performanceSpecs),
                       EngineBoxWidget(this.auto.engineSpecs, this.auto.version),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        color: Colors.orange,
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        color: Colors.orange,
-                      ),
+                      GearBoxWidget(this.auto.transmissionSpecs),
+                      DimensionsBoxWidget(this.auto.dimensionsSpecs),
                     ],
                   ),
                 ),
@@ -257,11 +253,15 @@ class _OverviewComponentState extends State<OverviewComponent> {
           var autoSpecsDto = value.data;
           this.auto.performanceSpecs = autoSpecsDto.performanceSpecs;
           this.auto.engineSpecs = autoSpecsDto.engineSpecs;
+          this.auto.transmissionSpecs = autoSpecsDto.transmissionSpecs;
+          this.auto.dimensionsSpecs = autoSpecsDto.dimensionsSpecs;
 
           this.horsePowerStr =
               autoSpecsDto.engineSpecs.horsePower.toStringAsFixed(0);
           this.zeroToHundredStr =
               autoSpecsDto.performanceSpecs.zeroToHundred.toString();
+          this.weightStr =
+              autoSpecsDto.dimensionsSpecs.weight.toStringAsFixed(0);
         } else {
           // tratar erro
         }

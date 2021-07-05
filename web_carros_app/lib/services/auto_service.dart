@@ -1,9 +1,11 @@
+import 'package:web_carros_app/models/dimensions_specs.dart';
 import 'package:web_carros_app/models/dtos/auto_specs_sto.dart';
 import 'package:web_carros_app/models/dtos/filterDto.dart';
 import 'package:web_carros_app/models/dtos/response_dto.dart';
 import 'package:web_carros_app/models/auto.dart';
 import 'package:web_carros_app/models/engine_specs.dart';
 import 'package:web_carros_app/models/performace_specs.dart';
+import 'package:web_carros_app/models/transmission_specs.dart';
 
 class AutoService {
   Future<ResponseDto> getAutoSpecs(String autoId) async {
@@ -32,6 +34,27 @@ class AutoService {
     engineSpecs.maxRPM = 7200;
 
     autoSpecsDto.engineSpecs = engineSpecs;
+
+    TransmissionSpecs transmissionSpecs = TransmissionSpecs();
+    transmissionSpecs.autoId = autoId;
+    transmissionSpecs.code = 'PDK';
+    transmissionSpecs.tranction = 'Tração integral';
+    transmissionSpecs.gearbox = 'Automatizado de 8 marchas';
+    transmissionSpecs.gearshift = 'Embreagem dupla banhada a óleo';
+
+    autoSpecsDto.transmissionSpecs = transmissionSpecs;
+
+    DimensionsSpecs dimensionsSpecs = DimensionsSpecs();
+    dimensionsSpecs.autoId = autoId;
+    dimensionsSpecs.fuelCapacity = 68;
+    dimensionsSpecs.height = 1303;
+    dimensionsSpecs.lenghtBetweenAxis = 2450;
+    dimensionsSpecs.length = 4535;
+    dimensionsSpecs.width = 1900;
+    dimensionsSpecs.weight = 1640;
+    dimensionsSpecs.trunkCapacity = 392;
+
+    autoSpecsDto.dimensionsSpecs = dimensionsSpecs;
 
     await Future.delayed(Duration(milliseconds: 1000), () {
       res.success = true;
