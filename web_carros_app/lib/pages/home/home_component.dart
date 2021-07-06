@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:web_carros_app/models/auto.dart';
 import 'package:web_carros_app/pages/overview/overview_component.dart';
 import 'package:web_carros_app/pages/shared/loading_widget.dart';
+import 'package:web_carros_app/services/auto_service.dart';
 import 'package:web_carros_app/services/local_storage_service.dart';
 import 'package:web_carros_app/utils/styles.dart';
 
@@ -14,6 +15,7 @@ class HomeComponent extends StatefulWidget {
 
 class _HomeComponentState extends State<HomeComponent> {
   LocalStorageService _localStorageService;
+  AutoService _autoService;
   List<Auto> favorites;
   List<Auto> news;
   bool loadingFavorites;
@@ -21,6 +23,7 @@ class _HomeComponentState extends State<HomeComponent> {
 
   _HomeComponentState() {
     this._localStorageService = LocalStorageService();
+    this._autoService = AutoService();
   }
 
   @override
@@ -37,7 +40,7 @@ class _HomeComponentState extends State<HomeComponent> {
 
     this.news = [];
 
-    this._localStorageService.getNews().then((value) {
+    this._autoService.getNews().then((value) {
       if (value == null) {
         // tratar server erro
       } else {

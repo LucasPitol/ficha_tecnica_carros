@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "271029390399",
+    "project_id": "web-carros-3cb2a",
+    "storage_bucket": "web-carros-3cb2a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:271029390399:android:bad0833edb4cafc6007c8a",
+        "android_client_info": {
+          "package_name": "com.pitol.web_carros_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "271029390399-71q6mnfue5phfp4k6e2dc6bm0va9pcdi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpZZldUf7tbBTei0UfnL_mp5tQxFtLzEI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "271029390399-71q6mnfue5phfp4k6e2dc6bm0va9pcdi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
