@@ -5,13 +5,9 @@ import 'package:web_carros_app/models/dimensions_specs.dart';
 import 'package:web_carros_app/models/performace_specs.dart';
 import 'package:web_carros_app/models/dtos/filterDto.dart';
 import 'package:web_carros_app/models/engine_specs.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:web_carros_app/models/auto.dart';
 
-
 class AutoService {
-  final dbReference = FirebaseFirestore.instance;
-
   Future<ResponseDto> getNews() async {
     ResponseDto res = ResponseDto();
     List<Auto> autos = [];
