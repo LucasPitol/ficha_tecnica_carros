@@ -1,11 +1,13 @@
+import '../brand.dart';
+
 class FilterDto {
-  String brand;
+  Brand brand;
   String model;
-  DateTime initDate;
-  DateTime endDate;
+  int initYear;
+  int endYear;
 
   FilterDto() {
-    this.initDate = DateTime(1900, 01, 01);
-    this.endDate = DateTime.now();
+    this.initYear = 1900;
+    this.endYear = DateTime.now().year;
   }
 }

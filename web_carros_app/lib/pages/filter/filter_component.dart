@@ -32,21 +32,22 @@ class _FilterComponentState extends State<FilterComponent> {
   bool isShowingSelectModelContainer;
   Brand selectedBrand;
   Model selectedModel;
-  DateTime initDate;
-  DateTime endDate;
+  int initYear;
+  int endYear;
 
   _FilterComponentState(this.previousFilter) {
     this._brandService = BrandService();
     this.newFilter = previousFilter;
+    this.selectedBrand = previousFilter.brand;
     this.isShowingSelectBrandContainer = false;
     this.isShowingSelectModelContainer = false;
     this.brandsLoading = false;
     this.brandList = [];
     this.modelList = [];
-    this.initDate = previousFilter.initDate;
-    this.endDate = previousFilter.endDate;
-    this.newFilter.initDate = initDate;
-    this.newFilter.endDate = endDate;
+    this.initYear = previousFilter.initYear;
+    this.endYear = previousFilter.endYear;
+    this.newFilter.initYear = initYear;
+    this.newFilter.endYear = endYear;
   }
 
   @override
@@ -90,7 +91,7 @@ class _FilterComponentState extends State<FilterComponent> {
         this.selectedBrand = brand;
       });
 
-      this.newFilter.brand = this.selectedBrand.name;
+      this.newFilter.brand = this.selectedBrand;
 
       this.hideSelectBrandContainer();
     }
@@ -180,20 +181,20 @@ class _FilterComponentState extends State<FilterComponent> {
   }
 
   showSelectYearBottomSheet() async {
-    Future<Tuple<DateTime, DateTime>> selectedValue = showModalBottomSheet(
+    Future<Tuple<int, int>> selectedValue = showModalBottomSheet(
         context: context,
         builder: (builder) {
-          return YearBottomSheetComponent(this.initDate, this.endDate);
+          return YearBottomSheetComponent(this.initYear, this.endYear);
         });
     selectedValue.then((value) {
       if (value != null) {
         setState(() {
-          this.initDate = value.a;
-          this.endDate = value.b;
+          this.initYear = value.a;
+          this.endYear = value.b;
         });
 
-        this.newFilter.initDate = initDate;
-        this.newFilter.endDate = endDate;
+        this.newFilter.initYear = initYear;
+        this.newFilter.endYear = endYear;
       }
     });
   }
@@ -300,9 +301,9 @@ class _FilterComponentState extends State<FilterComponent> {
                           ),
                           Text(
                             'De ' +
-                                this.initDate.year.toString() +
+                                this.initYear.toString() +
                                 ' até ' +
-                                this.endDate.year.toString(),
+                                this.endYear.toString(),
                             style: Styles.montTextGrey,
                           ),
                         ],
