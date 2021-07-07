@@ -1,13 +1,15 @@
-import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:web_carros_app/models/brand.dart';
-import 'package:web_carros_app/models/dtos/filterDto.dart';
-import 'package:web_carros_app/models/model.dart';
 import 'package:web_carros_app/pages/shared/loading_block.dart';
 import 'package:web_carros_app/services/brand_service.dart';
+import 'package:web_carros_app/models/dtos/filterDto.dart';
+import 'package:web_carros_app/models/brand.dart';
+import 'package:web_carros_app/models/tuple.dart';
+import 'package:web_carros_app/models/model.dart';
 import 'package:web_carros_app/utils/styles.dart';
+import 'package:flutter/material.dart';
 
 import 'select_brand_container.dart';
+import 'year_bottom_sheet_component.dart';
 
 class FilterComponent extends StatefulWidget {
   final FilterDto previousFilter;
@@ -20,6 +22,7 @@ class FilterComponent extends StatefulWidget {
 
 class _FilterComponentState extends State<FilterComponent> {
   final FilterDto previousFilter;
+  FilterDto newFilter;
   BrandService _brandService;
   List<Brand> brandList;
   List<Model> modelList;
@@ -29,14 +32,21 @@ class _FilterComponentState extends State<FilterComponent> {
   bool isShowingSelectModelContainer;
   Brand selectedBrand;
   Model selectedModel;
+  DateTime initDate;
+  DateTime endDate;
 
   _FilterComponentState(this.previousFilter) {
     this._brandService = BrandService();
+    this.newFilter = previousFilter;
     this.isShowingSelectBrandContainer = false;
     this.isShowingSelectModelContainer = false;
     this.brandsLoading = false;
     this.brandList = [];
     this.modelList = [];
+    this.initDate = previousFilter.initDate;
+    this.endDate = previousFilter.endDate;
+    this.newFilter.initDate = initDate;
+    this.newFilter.endDate = endDate;
   }
 
   @override
@@ -79,6 +89,8 @@ class _FilterComponentState extends State<FilterComponent> {
       setState(() {
         this.selectedBrand = brand;
       });
+
+      this.newFilter.brand = this.selectedBrand.name;
 
       this.hideSelectBrandContainer();
     }
@@ -167,8 +179,23 @@ class _FilterComponentState extends State<FilterComponent> {
     );
   }
 
-  showSelectYearBottomSheet() {
-    print('year');
+  showSelectYearBottomSheet() async {
+    Future<Tuple<DateTime, DateTime>> selectedValue = showModalBottomSheet(
+        context: context,
+        builder: (builder) {
+          return YearBottomSheetComponent(this.initDate, this.endDate);
+        });
+    selectedValue.then((value) {
+      if (value != null) {
+        setState(() {
+          this.initDate = value.a;
+          this.endDate = value.b;
+        });
+
+        this.newFilter.initDate = initDate;
+        this.newFilter.endDate = endDate;
+      }
+    });
   }
 
   @override
@@ -215,41 +242,41 @@ class _FilterComponentState extends State<FilterComponent> {
                       ),
                     ),
                   ),
-                  Container(
-                    width: double.infinity,
-                    margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                    child: Divider(
-                      color: Colors.grey.shade900,
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      showSelectModelContainer();
-                    },
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Modelo',
-                            style: Styles.montText,
-                          ),
-                          (selectedModel == null || selectedModel.id == null)
-                              ? FaIcon(
-                                  FontAwesomeIcons.plus,
-                                  color: Colors.grey.shade400,
-                                  size: 18,
-                                )
-                              : Text(
-                                  selectedModel.name,
-                                  style: Styles.montTextGrey,
-                                ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  // Container(
+                  //   width: double.infinity,
+                  //   margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                  //   child: Divider(
+                  //     color: Colors.grey.shade900,
+                  //   ),
+                  // ),
+                  // InkWell(
+                  //   onTap: () {
+                  //     showSelectModelContainer();
+                  //   },
+                  //   child: Container(
+                  //     padding:
+                  //         EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       children: [
+                  //         Text(
+                  //           'Modelo',
+                  //           style: Styles.montText,
+                  //         ),
+                  //         (selectedModel == null || selectedModel.id == null)
+                  //             ? FaIcon(
+                  //                 FontAwesomeIcons.plus,
+                  //                 color: Colors.grey.shade400,
+                  //                 size: 18,
+                  //               )
+                  //             : Text(
+                  //                 selectedModel.name,
+                  //                 style: Styles.montTextGrey,
+                  //               ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   Container(
                     width: double.infinity,
                     margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
@@ -272,7 +299,10 @@ class _FilterComponentState extends State<FilterComponent> {
                             style: Styles.montText,
                           ),
                           Text(
-                            'De 1900 até 2021',
+                            'De ' +
+                                this.initDate.year.toString() +
+                                ' até ' +
+                                this.endDate.year.toString(),
                             style: Styles.montTextGrey,
                           ),
                         ],

@@ -1,5 +1,11 @@
 class FilterDto {
   String brand;
   String model;
-  int year;
+  DateTime initDate;
+  DateTime endDate;
+
+  FilterDto() {
+    this.initDate = DateTime(1900, 01, 01);
+    this.endDate = DateTime.now();
+  }
 }

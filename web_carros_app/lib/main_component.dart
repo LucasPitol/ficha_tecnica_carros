@@ -21,7 +21,9 @@ class MainComponentState extends State<MainComponent> {
 
   FilterDto filter;
 
-  MainComponentState();
+  MainComponentState() {
+    this.filter = FilterDto();
+  }
 
   @override
   void initState() {
@@ -64,7 +66,7 @@ class MainComponentState extends State<MainComponent> {
   }
 
   clearFilters() {
-    this.filter = null;
+    this.filter = FilterDto();
 
     setState(() {
       this._selectedIndex = Constants.home_page_index;
