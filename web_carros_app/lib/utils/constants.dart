@@ -6,7 +6,7 @@ class Constants {
 
   static getYears() {
     int initYear = 1900;
-    int finalYear = DateTime.now().year;
+    int finalYear = (DateTime.now().year) + 1;
 
     List<int> years = [];
 

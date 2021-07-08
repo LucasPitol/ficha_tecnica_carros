@@ -8,6 +8,6 @@ class FilterDto {
 
   FilterDto() {
     this.initYear = 1900;
-    this.endYear = DateTime.now().year;
+    this.endYear = (DateTime.now().year) + 1;
   }
 }

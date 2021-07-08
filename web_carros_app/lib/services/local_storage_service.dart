@@ -6,7 +6,7 @@ class LocalStorageService {
     ResponseDto res = ResponseDto();
     List<Auto> autos = [];
 
-    Auto m1 = Auto();
+    Auto m1 = Auto(null);
     m1.id = '1';
     m1.brand = 'Porsche';
     m1.model = '911';
@@ -17,7 +17,7 @@ class LocalStorageService {
     m1.fipe = 1249000.00;
     m1.creationDate = DateTime.now();
 
-    Auto m2 = Auto();
+    Auto m2 = Auto(null);
     m2.id = '2';
     m2.brand = 'Porsche';
     m2.model = 'Tycan';
