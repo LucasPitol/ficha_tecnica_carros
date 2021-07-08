@@ -10,13 +10,13 @@ import 'utils/constants.dart';
 import 'utils/styles.dart';
 
 class MainComponent extends StatefulWidget {
-
   @override
   MainComponentState createState() => MainComponentState();
 }
 
-class MainComponentState extends State<MainComponent> {
+GlobalKey<ListAutosComponentState> listAutosComponentGlobalKey = GlobalKey();
 
+class MainComponentState extends State<MainComponent> {
   int _selectedIndex = Constants.home_page_index;
 
   FilterDto filter;
@@ -44,10 +44,19 @@ class MainComponentState extends State<MainComponent> {
       MaterialPageRoute(builder: (context) => FilterComponent(filter)),
     );
 
-    if (filtersTemp != null) {
-      setState(() {
-        this._selectedIndex = Constants.list_page_index;
-      });
+
+    if (filtersTemp != null &&
+        filter.brand != null &&
+        filter.brand.name.isNotEmpty) {
+      this.filter = filtersTemp;
+
+      if (this._selectedIndex == Constants.list_page_index) {
+        listAutosComponentGlobalKey.currentState.getFilteredAutos();
+      } else {
+        setState(() {
+          this._selectedIndex = Constants.list_page_index;
+        });
+      }
     }
   }
 
@@ -58,8 +67,12 @@ class MainComponentState extends State<MainComponent> {
         break;
 
       case 1:
-      return ListAutosComponent(this.filter, this.clearFilters);
-      break;
+        return ListAutosComponent(
+          key: listAutosComponentGlobalKey,
+          filterDto: this.filter,
+          clearFilterHandler: this.clearFilters,
+        );
+        break;
 
       default:
     }
@@ -79,7 +92,7 @@ class MainComponentState extends State<MainComponent> {
       resizeToAvoidBottomInset: true,
       backgroundColor: Styles.mainBackgroundColor,
       body: SafeArea(
-        child: _getScreenOption(),//_widgetOptions.elementAt(_selectedIndex),
+        child: _getScreenOption(), //_widgetOptions.elementAt(_selectedIndex),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

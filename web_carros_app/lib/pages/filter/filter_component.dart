@@ -144,7 +144,11 @@ class _FilterComponentState extends State<FilterComponent> {
   }
 
   _applyFilter() {
-    Navigator.pop(context, FilterDto());
+    this.newFilter.brand = selectedBrand;
+    this.newFilter.initYear = initYear;
+    this.newFilter.endYear = endYear;
+
+    Navigator.pop(context, newFilter);
   }
 
   _getAppBar() {

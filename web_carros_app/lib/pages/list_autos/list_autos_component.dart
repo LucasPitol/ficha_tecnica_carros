@@ -12,21 +12,23 @@ class ListAutosComponent extends StatefulWidget {
   final FilterDto filterDto;
   final Function clearFilterHandler;
 
-  ListAutosComponent(this.filterDto, this.clearFilterHandler);
+  // ListAutosComponent(this.filterDto, this.clearFilterHandler);
+  ListAutosComponent({Key key, this.filterDto, this.clearFilterHandler})
+      : super(key: key);
 
   @override
-  _ListAutosComponentState createState() =>
-      _ListAutosComponentState(filterDto, clearFilterHandler);
+  ListAutosComponentState createState() =>
+      ListAutosComponentState(filterDto, clearFilterHandler);
 }
 
-class _ListAutosComponentState extends State<ListAutosComponent> {
+class ListAutosComponentState extends State<ListAutosComponent> {
   final FilterDto filterDto;
   final Function clearFilterHandler;
   AutoService _autoService;
   bool listLoading;
   List<Auto> autos;
 
-  _ListAutosComponentState(this.filterDto, this.clearFilterHandler) {
+  ListAutosComponentState(this.filterDto, this.clearFilterHandler) {
     this._autoService = AutoService();
     this.listLoading = false;
     this.autos = [];
@@ -35,14 +37,14 @@ class _ListAutosComponentState extends State<ListAutosComponent> {
   @override
   void initState() {
     super.initState();
-    this._getFilteredAutos();
+    this.getFilteredAutos();
   }
 
   _goToSettings() {
     print('settings');
   }
 
-  _getFilteredAutos() {
+  getFilteredAutos() {
     setState(() {
       this.listLoading = true;
     });
