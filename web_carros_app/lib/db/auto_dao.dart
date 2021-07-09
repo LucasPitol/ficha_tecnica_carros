@@ -25,4 +25,22 @@ class AutoDao {
 
     return autos;
   }
+
+  Future<List<Auto>> getNews() async {
+    List<Auto> autos = [];
+
+    await dbReference
+        .collection(brandCollectionName)
+        .where('isNews', isEqualTo: true)
+        .get()
+        .then((snapShot) {
+      snapShot.docs.forEach((item) {
+        var auto = Auto(item);
+
+        autos.add(auto);
+      });
+    });
+
+    return autos;
+  }
 }
