@@ -15,6 +15,16 @@ class LocalStorageService {
     }
   }
 
+  Future<void> clearSavedAutoAsFavorite(String autoId) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    bool alreadySaved = prefs.containsKey(autoId);
+
+    if (alreadySaved) {
+      await prefs.remove(autoId);
+    }
+  }
+
   Future<bool> isAlreadySaved(String autoId) async {
     final prefs = await SharedPreferences.getInstance();
 

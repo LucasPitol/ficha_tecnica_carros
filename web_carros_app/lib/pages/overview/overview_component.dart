@@ -61,13 +61,12 @@ class _OverviewComponentState extends State<OverviewComponent> {
   }
 
   _verifyFavorite() async {
-
     String autoId = this.auto.id;
 
     bool alreadySaved = await this._localStorageService.isAlreadySaved(autoId);
 
     setState(() {
-    this.autoAlreadySaved = alreadySaved;
+      this.autoAlreadySaved = alreadySaved;
     });
   }
 
@@ -78,6 +77,16 @@ class _OverviewComponentState extends State<OverviewComponent> {
 
     setState(() {
       this.autoAlreadySaved = true;
+    });
+  }
+
+  _clearSavedAuto() async {
+    String autoId = this.auto.id;
+
+    this._localStorageService.clearSavedAutoAsFavorite(autoId);
+
+    setState(() {
+      this.autoAlreadySaved = false;
     });
   }
 
@@ -233,7 +242,11 @@ class _OverviewComponentState extends State<OverviewComponent> {
                 child: InkWell(
                   borderRadius: Styles.circularBorderRadius,
                   onTap: () {
-                    this._saveAuto();
+                    if (autoAlreadySaved) {
+                      this._clearSavedAuto();
+                    } else {
+                      this._saveAuto();
+                    }
                   },
                   child: Container(
                     margin: EdgeInsets.all(10),
