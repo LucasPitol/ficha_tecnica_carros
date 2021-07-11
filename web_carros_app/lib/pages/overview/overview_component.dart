@@ -4,6 +4,7 @@ import 'package:web_carros_app/models/auto.dart';
 import 'package:flutter/material.dart';
 import 'package:web_carros_app/pages/shared/loading_widget.dart';
 import 'package:web_carros_app/services/auto_service.dart';
+import 'package:web_carros_app/services/local_storage_service.dart';
 import 'package:web_carros_app/utils/constants.dart';
 import 'package:web_carros_app/utils/styles.dart';
 
@@ -29,15 +30,19 @@ class _OverviewComponentState extends State<OverviewComponent> {
 
   Auto auto;
   AutoService _autoService;
+  LocalStorageService _localStorageService;
   bool specsLoading;
   String horsePowerStr;
   String zeroToHundredStr;
   String fipeStr;
   String weightStr;
+  bool autoAlreadySaved;
 
   _OverviewComponentState(this.auto) {
     this._autoService = AutoService();
+    this._localStorageService = LocalStorageService();
     specsLoading = true;
+    this.autoAlreadySaved = false;
     horsePowerStr = Constants.empty_string;
     zeroToHundredStr = Constants.empty_string;
     fipeStr = Constants.empty_string;
@@ -54,9 +59,14 @@ class _OverviewComponentState extends State<OverviewComponent> {
     Navigator.pop(context);
   }
 
-  _saveAuto() {
-    print('save auto');
-    // this._autoService.mock();
+  _saveAuto() async {
+    String autoId = this.auto.id;
+
+    this._localStorageService.saveAsFavorite(autoId);
+
+    setState(() {
+      this.autoAlreadySaved = true;
+    });
   }
 
   Widget _getAutoSpecsLayout() {
@@ -216,7 +226,9 @@ class _OverviewComponentState extends State<OverviewComponent> {
                   child: Container(
                     margin: EdgeInsets.all(10),
                     child: FaIcon(
-                      FontAwesomeIcons.bookmark,
+                      autoAlreadySaved
+                          ? FontAwesomeIcons.solidBookmark
+                          : FontAwesomeIcons.bookmark,
                       size: 22,
                       color: Styles.mainTextColor,
                     ),
