@@ -53,10 +53,22 @@ class _OverviewComponentState extends State<OverviewComponent> {
   void initState() {
     super.initState();
     this._getAutoSpecs();
+    this._verifyFavorite();
   }
 
   _goBack() {
     Navigator.pop(context);
+  }
+
+  _verifyFavorite() async {
+
+    String autoId = this.auto.id;
+
+    bool alreadySaved = await this._localStorageService.isAlreadySaved(autoId);
+
+    setState(() {
+    this.autoAlreadySaved = alreadySaved;
+    });
   }
 
   _saveAuto() async {

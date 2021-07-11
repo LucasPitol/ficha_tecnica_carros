@@ -15,6 +15,12 @@ class LocalStorageService {
     }
   }
 
+  Future<bool> isAlreadySaved(String autoId) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    return prefs.containsKey(autoId);
+  }
+
   Future<ResponseDto> getFavoriteAutos() async {
     ResponseDto res = ResponseDto();
     List<Auto> autos = [];
