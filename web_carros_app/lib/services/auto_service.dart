@@ -28,6 +28,17 @@ class AutoService {
     return res;
   }
 
+  Future<ResponseDto> getByIds(List<String> autoIds) async {
+    ResponseDto res = ResponseDto();
+
+    List<Auto> autos = await this._dao.getByIds(autoIds);
+
+    res.success = true;
+    res.data = autos;
+
+    return res;
+  }
+
   Future<ResponseDto> getAutoSpecs(String autoId) async {
     ResponseDto res = ResponseDto();
     AutoSpecsDto autoSpecsDto = AutoSpecsDto();
