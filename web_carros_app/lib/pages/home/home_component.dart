@@ -136,11 +136,7 @@ class _HomeComponentState extends State<HomeComponent> {
         closedShape: RoundedRectangleBorder(
             borderRadius: Styles.defaultCardBorderRadius),
         onClosed: (val) {
-          // if (refresh) {
-          //   this.updatePageContent();
-          //   this.refresh = false;
-          // }
-          // updateAppBar();
+          this._getFavoriteAutos();
         },
         openBuilder: (context, action) {
           return OverviewComponent(item);
@@ -198,11 +194,7 @@ class _HomeComponentState extends State<HomeComponent> {
         closedShape: RoundedRectangleBorder(
             borderRadius: Styles.defaultCardBorderRadius),
         onClosed: (val) {
-          // if (refresh) {
-          //   this.updatePageContent();
-          //   this.refresh = false;
-          // }
-          // updateAppBar();
+          this._getFavoriteAutos();
         },
         openBuilder: (context, action) {
           return OverviewComponent(item);
@@ -255,7 +247,7 @@ class _HomeComponentState extends State<HomeComponent> {
                   // News
                   loadingNewsAndTrend
                       ? Container(
-                        height: 227,
+                          height: 227,
                           child: LoadingWidget(),
                         )
                       : Container(
