@@ -42,7 +42,6 @@ class Auto extends AbstractModel{
       this.creationDate = creationDateTimestamp.toDate();
     }
 
-    this.transmissionSpecs = TransmissionSpecs();
     this.dimensionsSpecs = DimensionsSpecs();
   }
 

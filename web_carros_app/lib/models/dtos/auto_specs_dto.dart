@@ -11,7 +11,6 @@ class AutoSpecsDto {
   DimensionsSpecs dimensionsSpecs;
 
   AutoSpecsDto() {
-    this.transmissionSpecs = TransmissionSpecs();
     this.dimensionsSpecs = DimensionsSpecs();
   }
 }

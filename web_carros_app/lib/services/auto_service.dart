@@ -8,6 +8,7 @@ import 'package:web_carros_app/models/engine_specs.dart';
 import 'package:web_carros_app/models/auto.dart';
 import 'package:web_carros_app/db/auto_dao.dart';
 
+import 'transmission_specs_service.dart';
 import 'performance_specs_service.dart';
 import 'engine_specs_service.dart';
 
@@ -15,11 +16,13 @@ class AutoService {
   AutoDao _dao;
   PerformanceSpecsService _performanceSpecsService;
   EngineSpecsService _engineSpecsService;
+  TransmissionSpecsService _transmissionSpecsService;
 
   AutoService() {
     this._dao = AutoDao();
     this._performanceSpecsService = PerformanceSpecsService();
     this._engineSpecsService = EngineSpecsService();
+    this._transmissionSpecsService = TransmissionSpecsService();
   }
 
   mockData() {
@@ -62,12 +65,7 @@ class AutoService {
 
     autoSpecsDto.engineSpecs = engineSpecs;
 
-    TransmissionSpecs transmissionSpecs = TransmissionSpecs();
-    transmissionSpecs.autoId = autoId;
-    transmissionSpecs.code = 'PDK';
-    transmissionSpecs.tranction = 'Tração integral';
-    transmissionSpecs.gearbox = 'Automatizado de 8 marchas';
-    transmissionSpecs.gearshift = 'Embreagem dupla banhada a óleo';
+    TransmissionSpecs transmissionSpecs = await this._transmissionSpecsService.getTransmissionSpecsByAutoId(autoId);
 
     autoSpecsDto.transmissionSpecs = transmissionSpecs;
 

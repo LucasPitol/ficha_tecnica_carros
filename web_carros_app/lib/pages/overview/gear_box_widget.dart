@@ -32,9 +32,9 @@ class GearBoxWidget extends StatelessWidget {
             ),
           ),
           _getRowInfo(this.transmissionSpecs.code),
-          _getRowInfo(this.transmissionSpecs.tranction),
+          _getRowInfo(this.transmissionSpecs.traction),
           _getRowInfo(this.transmissionSpecs.gearbox),
-          _getRowInfo(this.transmissionSpecs.gearshift),
+          _getRowInfo(this.transmissionSpecs.gearShift),
         ],
       ),
     );
