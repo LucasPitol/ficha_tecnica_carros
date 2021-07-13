@@ -11,13 +11,13 @@ class DimensionsBoxWidget extends StatelessWidget {
   String trunkStr;
 
   DimensionsBoxWidget(this.dimensionsSpecs) {
-    this.lengthStr = (dimensionsSpecs.length.toStringAsFixed(1) + ' mm');
+    this.lengthStr = (dimensionsSpecs.length.toStringAsFixed(0) + ' mm');
 
-    this.widthStr = (dimensionsSpecs.width.toStringAsFixed(1) + ' mm');
+    this.widthStr = (dimensionsSpecs.width.toStringAsFixed(0) + ' mm');
 
-    this.heightStr = (dimensionsSpecs.height.toStringAsFixed(1) + ' mm');
+    this.heightStr = (dimensionsSpecs.height.toStringAsFixed(0) + ' mm');
 
-    this.weightStr = (dimensionsSpecs.weight.toStringAsFixed(1) + ' kg');
+    this.weightStr = (dimensionsSpecs.weight.toStringAsFixed(0) + ' kg');
 
     this.trunkStr = (dimensionsSpecs.trunkCapacity.toStringAsFixed(1) + ' l');
   }

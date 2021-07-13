@@ -1,6 +1,6 @@
 
 import 'package:web_carros_app/models/transmission_specs.dart';
-import 'package:web_carros_app/db/transmission_dao.dart';
+import 'package:web_carros_app/db/transmission_specs_dao.dart';
 
 class TransmissionSpecsService {
   TransmissionSpecsDao _dao;

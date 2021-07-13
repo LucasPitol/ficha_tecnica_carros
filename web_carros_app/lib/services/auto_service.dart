@@ -10,6 +10,7 @@ import 'package:web_carros_app/db/auto_dao.dart';
 
 import 'transmission_specs_service.dart';
 import 'performance_specs_service.dart';
+import 'dimension_specs_service.dart';
 import 'engine_specs_service.dart';
 
 class AutoService {
@@ -17,12 +18,14 @@ class AutoService {
   PerformanceSpecsService _performanceSpecsService;
   EngineSpecsService _engineSpecsService;
   TransmissionSpecsService _transmissionSpecsService;
+  DimensionsSpecsService _dimensionsSpecsService;
 
   AutoService() {
     this._dao = AutoDao();
     this._performanceSpecsService = PerformanceSpecsService();
     this._engineSpecsService = EngineSpecsService();
     this._transmissionSpecsService = TransmissionSpecsService();
+    this._dimensionsSpecsService = DimensionsSpecsService();
   }
 
   mockData() {
@@ -69,13 +72,7 @@ class AutoService {
 
     autoSpecsDto.transmissionSpecs = transmissionSpecs;
 
-    DimensionsSpecs dimensionsSpecs = DimensionsSpecs();
-    dimensionsSpecs.autoId = autoId;
-    dimensionsSpecs.height = 1303;
-    dimensionsSpecs.length = 4535;
-    dimensionsSpecs.width = 1900;
-    dimensionsSpecs.weight = 1640;
-    dimensionsSpecs.trunkCapacity = 392;
+    DimensionsSpecs dimensionsSpecs = await this._dimensionsSpecsService.getDimensionsSpecsByAutoId(autoId);
 
     autoSpecsDto.dimensionsSpecs = dimensionsSpecs;
 

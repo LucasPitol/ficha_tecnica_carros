@@ -7,7 +7,7 @@ import 'package:web_carros_app/models/transmission_specs.dart';
 import 'abstract_model.dart';
 import 'aditional_specs.dart';
 
-class Auto extends AbstractModel{
+class Auto extends AbstractModel {
   String id;
   String brand;
   String model;
@@ -41,18 +41,5 @@ class Auto extends AbstractModel{
       this.generation = objMapp['generation'];
       this.creationDate = creationDateTimestamp.toDate();
     }
-
-    this.dimensionsSpecs = DimensionsSpecs();
   }
-
-  // Auto(DocumentSnapshot doc) {
-  //   Map<String, dynamic> objMapp = doc.data();
-
-  //   Timestamp creationDateTimestamp = objMapp['creationDate'];
-
-  //   this.id = doc.id;
-  //   this.name = objMapp['name'];
-  //   this.country = objMapp['country'];
-  //   this.creationDate = creationDateTimestamp.toDate();
-  // }
 }
