@@ -1,3 +1,4 @@
+import 'package:web_carros_app/models/aditional_specs.dart';
 import 'package:web_carros_app/models/dtos/auto_specs_dto.dart';
 import 'package:web_carros_app/models/transmission_specs.dart';
 import 'package:web_carros_app/models/dtos/response_dto.dart';
@@ -11,6 +12,7 @@ import 'package:web_carros_app/db/auto_dao.dart';
 import 'transmission_specs_service.dart';
 import 'performance_specs_service.dart';
 import 'dimension_specs_service.dart';
+import 'aditional_specs_service.dart';
 import 'engine_specs_service.dart';
 
 class AutoService {
@@ -19,6 +21,7 @@ class AutoService {
   EngineSpecsService _engineSpecsService;
   TransmissionSpecsService _transmissionSpecsService;
   DimensionsSpecsService _dimensionsSpecsService;
+  AditionalSpecsService _aditionalSpecsService;
 
   AutoService() {
     this._dao = AutoDao();
@@ -26,6 +29,7 @@ class AutoService {
     this._engineSpecsService = EngineSpecsService();
     this._transmissionSpecsService = TransmissionSpecsService();
     this._dimensionsSpecsService = DimensionsSpecsService();
+    this._aditionalSpecsService = AditionalSpecsService();
   }
 
   mockData() {
@@ -60,26 +64,34 @@ class AutoService {
     ResponseDto res = ResponseDto();
     AutoSpecsDto autoSpecsDto = AutoSpecsDto();
 
-    PerformanceSpecs performanceSpecs = await this._performanceSpecsService.getPerformanceSpecsByAutoId(autoId);
+    PerformanceSpecs performanceSpecs =
+        await this._performanceSpecsService.getPerformanceSpecsByAutoId(autoId);
 
     autoSpecsDto.performanceSpecs = performanceSpecs;
 
-    EngineSpecs engineSpecs = await this._engineSpecsService.getEngineSpecsByAutoId(autoId);
+    EngineSpecs engineSpecs =
+        await this._engineSpecsService.getEngineSpecsByAutoId(autoId);
 
     autoSpecsDto.engineSpecs = engineSpecs;
 
-    TransmissionSpecs transmissionSpecs = await this._transmissionSpecsService.getTransmissionSpecsByAutoId(autoId);
+    TransmissionSpecs transmissionSpecs = await this
+        ._transmissionSpecsService
+        .getTransmissionSpecsByAutoId(autoId);
 
     autoSpecsDto.transmissionSpecs = transmissionSpecs;
 
-    DimensionsSpecs dimensionsSpecs = await this._dimensionsSpecsService.getDimensionsSpecsByAutoId(autoId);
+    DimensionsSpecs dimensionsSpecs =
+        await this._dimensionsSpecsService.getDimensionsSpecsByAutoId(autoId);
 
     autoSpecsDto.dimensionsSpecs = dimensionsSpecs;
 
-    await Future.delayed(Duration(milliseconds: 1000), () {
-      res.success = true;
-      res.data = autoSpecsDto;
-    });
+    AditionalSpecs aditionalSpecs =
+        await this._aditionalSpecsService.getAditionalSpecsByAutoId(autoId);
+
+    autoSpecsDto.aditionalSpecs = aditionalSpecs;
+
+    res.success = true;
+    res.data = autoSpecsDto;
 
     return res;
   }

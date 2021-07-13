@@ -8,6 +8,7 @@ import 'package:web_carros_app/services/local_storage_service.dart';
 import 'package:web_carros_app/utils/constants.dart';
 import 'package:web_carros_app/utils/styles.dart';
 
+import 'aditional_info_box_widget.dart';
 import 'dimensions_box_widget.dart';
 import 'engine_box_widget.dart';
 import 'gear_box_widget.dart';
@@ -139,13 +140,14 @@ class _OverviewComponentState extends State<OverviewComponent> {
                       EngineBoxWidget(this.auto.engineSpecs),
                       GearBoxWidget(this.auto.transmissionSpecs),
                       DimensionsBoxWidget(this.auto.dimensionsSpecs),
+                      AditionalInfoBoxWidget(this.auto.aditionalSpecs),
                     ],
                   ),
                 ),
                 Container(
                   child: SmoothPageIndicator(
                     controller: _pageViewController,
-                    count: 4,
+                    count: 5,
                     axisDirection: Axis.horizontal,
                     onDotClicked: (i) {
                       _pageViewController.animateToPage(
@@ -293,6 +295,7 @@ class _OverviewComponentState extends State<OverviewComponent> {
           this.auto.engineSpecs = autoSpecsDto.engineSpecs;
           this.auto.transmissionSpecs = autoSpecsDto.transmissionSpecs;
           this.auto.dimensionsSpecs = autoSpecsDto.dimensionsSpecs;
+          this.auto.aditionalSpecs = autoSpecsDto.aditionalSpecs;
 
           this.horsePowerStr =
               autoSpecsDto.engineSpecs.horsePower.toStringAsFixed(0);
