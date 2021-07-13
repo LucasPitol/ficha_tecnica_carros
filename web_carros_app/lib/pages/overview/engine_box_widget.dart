@@ -4,12 +4,11 @@ import 'package:web_carros_app/utils/styles.dart';
 
 class EngineBoxWidget extends StatelessWidget {
   final EngineSpecs engineSpecs;
-  final String version;
   String horsePowerStr;
   String torqueStr;
   String maxRPMStr;
 
-  EngineBoxWidget(this.engineSpecs, this.version) {
+  EngineBoxWidget(this.engineSpecs) {
     this.horsePowerStr = (engineSpecs.horsePower.toStringAsFixed(0) +
         ' cv a ' +
         engineSpecs.horsePowerRPM.toStringAsFixed(0) +
@@ -48,7 +47,7 @@ class EngineBoxWidget extends StatelessWidget {
               style: Styles.montTextTitle,
             ),
           ),
-          _getRowInfo(this.version),
+          _getRowInfo(this.engineSpecs.description),
           _getRowInfo(this.horsePowerStr),
           _getRowInfo(this.torqueStr),
           _getRowInfo(this.maxRPMStr),

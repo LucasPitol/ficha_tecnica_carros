@@ -17,6 +17,7 @@ class PerformanceSpecs extends AbstractModel {
       Timestamp creationDateTimestamp = objMapp['creationDate'];
 
       this.id = doc.id;
+      this.autoId = objMapp['autoId'];
       this.topSpeed = objMapp['topSpeed'].toDouble();
       this.zeroToHundred = objMapp['zeroToHundred'].toDouble();
       this.urbanConsumption = objMapp['urbanConsumption'].toDouble();

@@ -103,6 +103,7 @@ class AutoDao {
     batch.set(engineSpecsDocRef, {
       'id': engineSpecsId,
       'autoId': autoId,
+      'engineSpecs': '',
       'horsePower': 300,
       'horsePowerRPM': 6500,
       'torque': 38.7,

@@ -1,5 +1,4 @@
-import 'package:web_carros_app/db/auto_dao.dart';
-import 'package:web_carros_app/models/dtos/auto_specs_sto.dart';
+import 'package:web_carros_app/models/dtos/auto_specs_dto.dart';
 import 'package:web_carros_app/models/transmission_specs.dart';
 import 'package:web_carros_app/models/dtos/response_dto.dart';
 import 'package:web_carros_app/models/dimensions_specs.dart';
@@ -7,16 +6,20 @@ import 'package:web_carros_app/models/performace_specs.dart';
 import 'package:web_carros_app/models/dtos/filterDto.dart';
 import 'package:web_carros_app/models/engine_specs.dart';
 import 'package:web_carros_app/models/auto.dart';
+import 'package:web_carros_app/db/auto_dao.dart';
 
-import 'performance_specs.dart';
+import 'performance_specs_service.dart';
+import 'engine_specs_service.dart';
 
 class AutoService {
   AutoDao _dao;
   PerformanceSpecsService _performanceSpecsService;
+  EngineSpecsService _engineSpecsService;
 
   AutoService() {
     this._dao = AutoDao();
     this._performanceSpecsService = PerformanceSpecsService();
+    this._engineSpecsService = EngineSpecsService();
   }
 
   mockData() {
@@ -55,14 +58,7 @@ class AutoService {
 
     autoSpecsDto.performanceSpecs = performanceSpecs;
 
-    EngineSpecs engineSpecs = EngineSpecs();
-    engineSpecs.autoId = autoId;
-    engineSpecs.engineInstalation = 'Instalação traseira';
-    engineSpecs.horsePower = 650;
-    engineSpecs.horsePowerRPM = 6750;
-    engineSpecs.torque = 81.6;
-    engineSpecs.torqueRPM = 2500;
-    engineSpecs.maxRPM = 7200;
+    EngineSpecs engineSpecs = await this._engineSpecsService.getEngineSpecsByAutoId(autoId);
 
     autoSpecsDto.engineSpecs = engineSpecs;
 

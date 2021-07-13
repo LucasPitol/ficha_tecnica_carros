@@ -136,7 +136,7 @@ class _OverviewComponentState extends State<OverviewComponent> {
                     scrollDirection: Axis.horizontal,
                     children: [
                       PerformanceBoxWidget(this.auto.performanceSpecs),
-                      EngineBoxWidget(this.auto.engineSpecs, this.auto.version),
+                      EngineBoxWidget(this.auto.engineSpecs),
                       GearBoxWidget(this.auto.transmissionSpecs),
                       DimensionsBoxWidget(this.auto.dimensionsSpecs),
                     ],
