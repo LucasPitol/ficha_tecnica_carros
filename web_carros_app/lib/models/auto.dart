@@ -4,7 +4,10 @@ import 'package:web_carros_app/models/performace_specs.dart';
 import 'package:web_carros_app/models/engine_specs.dart';
 import 'package:web_carros_app/models/transmission_specs.dart';
 
-class Auto {
+import 'abstract_model.dart';
+import 'aditional_specs.dart';
+
+class Auto extends AbstractModel{
   String id;
   String brand;
   String model;
@@ -20,6 +23,7 @@ class Auto {
   EngineSpecs engineSpecs;
   TransmissionSpecs transmissionSpecs;
   DimensionsSpecs dimensionsSpecs;
+  AditionalSpecs aditionalSpecs;
 
   Auto(DocumentSnapshot doc) {
     if (doc != null) {
@@ -38,7 +42,6 @@ class Auto {
       this.creationDate = creationDateTimestamp.toDate();
     }
 
-    this.performanceSpecs = PerformanceSpecs();
     this.engineSpecs = EngineSpecs();
     this.transmissionSpecs = TransmissionSpecs();
     this.dimensionsSpecs = DimensionsSpecs();

@@ -3,8 +3,6 @@ class DimensionsSpecs {
   double length;
   double width;
   double height;
-  double fuelCapacity;
-  double lenghtBetweenAxis;
   double weight;
   double trunkCapacity;
 }

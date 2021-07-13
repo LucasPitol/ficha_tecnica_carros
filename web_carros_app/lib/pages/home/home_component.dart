@@ -83,6 +83,7 @@ class _HomeComponentState extends State<HomeComponent> {
 
   _goToSettings() {
     print('settings');
+    // this._autoService.mockData();
   }
 
   _getAppBar() {

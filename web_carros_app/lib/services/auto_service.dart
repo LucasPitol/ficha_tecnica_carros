@@ -8,11 +8,19 @@ import 'package:web_carros_app/models/dtos/filterDto.dart';
 import 'package:web_carros_app/models/engine_specs.dart';
 import 'package:web_carros_app/models/auto.dart';
 
+import 'performance_specs.dart';
+
 class AutoService {
   AutoDao _dao;
+  PerformanceSpecsService _performanceSpecsService;
 
   AutoService() {
     this._dao = AutoDao();
+    this._performanceSpecsService = PerformanceSpecsService();
+  }
+
+  mockData() {
+    // this._dao.mockData();
   }
 
   Future<ResponseDto> getNews() async {
@@ -43,20 +51,12 @@ class AutoService {
     ResponseDto res = ResponseDto();
     AutoSpecsDto autoSpecsDto = AutoSpecsDto();
 
-    PerformanceSpecs performanceSpecs = PerformanceSpecs();
-
-    performanceSpecs.autoId = autoId;
-    performanceSpecs.highwayConsumption = 9.1;
-    performanceSpecs.urbanConsumption = 6.9;
-    performanceSpecs.topSpeed = 330;
-    performanceSpecs.weightToPowerRatio = 2.5;
-    performanceSpecs.zeroToHundred = 2.7;
+    PerformanceSpecs performanceSpecs = await this._performanceSpecsService.getPerformanceSpecsByAutoId(autoId);
 
     autoSpecsDto.performanceSpecs = performanceSpecs;
 
     EngineSpecs engineSpecs = EngineSpecs();
     engineSpecs.autoId = autoId;
-    engineSpecs.cylinderCapacity = 3745;
     engineSpecs.engineInstalation = 'Instalação traseira';
     engineSpecs.horsePower = 650;
     engineSpecs.horsePowerRPM = 6750;
@@ -77,9 +77,7 @@ class AutoService {
 
     DimensionsSpecs dimensionsSpecs = DimensionsSpecs();
     dimensionsSpecs.autoId = autoId;
-    dimensionsSpecs.fuelCapacity = 68;
     dimensionsSpecs.height = 1303;
-    dimensionsSpecs.lenghtBetweenAxis = 2450;
     dimensionsSpecs.length = 4535;
     dimensionsSpecs.width = 1900;
     dimensionsSpecs.weight = 1640;

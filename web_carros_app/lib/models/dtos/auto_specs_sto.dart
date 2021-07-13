@@ -11,7 +11,6 @@ class AutoSpecsDto {
   DimensionsSpecs dimensionsSpecs;
 
   AutoSpecsDto() {
-    this.performanceSpecs = PerformanceSpecs();
     this.engineSpecs = EngineSpecs();
     this.transmissionSpecs = TransmissionSpecs();
     this.dimensionsSpecs = DimensionsSpecs();

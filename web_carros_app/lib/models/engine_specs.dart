@@ -5,6 +5,5 @@ class EngineSpecs {
   double torque;
   double torqueRPM;
   double maxRPM;
-  double cylinderCapacity;
   String engineInstalation;
 }
