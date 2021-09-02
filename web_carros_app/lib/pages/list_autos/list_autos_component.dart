@@ -103,6 +103,9 @@ class ListAutosComponentState extends State<ListAutosComponent> {
   }
 
   Widget _createCard(Auto item) {
+    String endYear = (item.endYear == null || item.endYear <= 0)
+        ? 'Presente'
+        : item.endYear.toString();
     return Container(
       margin: EdgeInsets.only(top: 10, bottom: 5, left: 20, right: 20),
       width: double.infinity,
@@ -124,34 +127,32 @@ class ListAutosComponentState extends State<ListAutosComponent> {
         },
         closedBuilder: (context, action) {
           return Container(
-            margin: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        item.brand,
-                        style: Styles.tileTitleTextStyle,
-                      ),
-                      Text(
-                        item.model,
-                        style: Styles.montText,
-                      ),
-                      Text(
-                        item.version,
-                        style: Styles.montTextGrey,
-                      ),
-                    ],
+            child: ListTile(
+              title: Text(
+                item.brand + ' ' + item.model,
+                style: Styles.tileTitleTextStyle,
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item.version,
+                    style: Styles.montTextGrey,
                   ),
+                  Text(
+                    item.initYear.toString() + ' - ' + endYear,
+                    style: Styles.montTextGrey,
+                  ),
+                ],
+              ),
+              isThreeLine: true,
+              trailing: Container(
+                child: Image.network(
+                  item.autoImagePath,
+                  fit: BoxFit.cover,
+                  width: 150,
                 ),
-                Text(
-                  item.year.toString(),
-                  style: Styles.montText,
-                ),
-              ],
+              ),
             ),
           );
         },

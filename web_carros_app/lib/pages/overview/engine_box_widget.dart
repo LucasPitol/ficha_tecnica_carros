@@ -12,12 +12,12 @@ class EngineBoxWidget extends StatelessWidget {
     this.horsePowerStr = (engineSpecs.horsePower.toStringAsFixed(0) +
         ' cv a ' +
         engineSpecs.horsePowerRPM.toStringAsFixed(0) +
-        'rpm');
+        ' rpm');
 
-    this.torqueStr = (engineSpecs.torque.toStringAsFixed(0) +
+    this.torqueStr = (engineSpecs.torque.toStringAsFixed(1) +
         ' kgfm a ' +
         engineSpecs.torqueRPM.toStringAsFixed(0) +
-        'rpm');
+        ' rpm');
 
     this.maxRPMStr =
         (engineSpecs.maxRPM.toStringAsFixed(0) + ' rotação máxima');

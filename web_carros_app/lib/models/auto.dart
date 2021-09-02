@@ -15,7 +15,8 @@ class Auto extends AbstractModel {
   String autoImagePath;
   String brandImagePath;
   double fipe;
-  int year;
+  int initYear;
+  int endYear;
   String generation;
   DateTime creationDate;
 
@@ -37,7 +38,8 @@ class Auto extends AbstractModel {
       this.version = objMapp['version'];
       this.autoImagePath = objMapp['autoImagePath'];
       this.brandImagePath = objMapp['brandImagePath'];
-      this.year = objMapp['year'];
+      this.initYear = objMapp['initYear'];
+      this.endYear = objMapp['endYear'];
       this.generation = objMapp['generation'];
       this.creationDate = creationDateTimestamp.toDate();
     }

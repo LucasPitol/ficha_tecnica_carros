@@ -1,4 +1,5 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:web_carros_app/pages/shared/loading_block.dart';
 import 'package:web_carros_app/services/brand_service.dart';
 import 'package:web_carros_app/models/dtos/filterDto.dart';
@@ -26,10 +27,10 @@ class _FilterComponentState extends State<FilterComponent> {
   BrandService _brandService;
   List<Brand> brandList;
   List<Model> modelList;
+  String _dropDownModelValue;
   bool brandsLoading;
   bool modelsLoading;
   bool isShowingSelectBrandContainer;
-  bool isShowingSelectModelContainer;
   Brand selectedBrand;
   Model selectedModel;
   int initYear;
@@ -40,10 +41,13 @@ class _FilterComponentState extends State<FilterComponent> {
     this.newFilter = previousFilter;
     this.selectedBrand = previousFilter.brand;
     this.isShowingSelectBrandContainer = false;
-    this.isShowingSelectModelContainer = false;
     this.brandsLoading = false;
+    this._dropDownModelValue = '718';
     this.brandList = [];
-    this.modelList = [];
+    this.modelList = [
+      Model(brandId: 'PORSCHE', name: '718'),
+      Model(brandId: 'PORSCHE', name: '911')
+    ];
     this.initYear = previousFilter.initYear;
     this.endYear = previousFilter.endYear;
     this.newFilter.initYear = initYear;
@@ -53,26 +57,6 @@ class _FilterComponentState extends State<FilterComponent> {
   @override
   void initState() {
     super.initState();
-  }
-
-  showSelectModelContainer() async {
-    if (modelList.isEmpty) {
-      await this._getModels();
-    }
-
-    setState(() {
-      this.isShowingSelectModelContainer = true;
-    });
-  }
-
-  selectModelHandler(Model model) {
-    if (model != null && model.id != null) {
-      setState(() {
-        this.selectedModel = model;
-      });
-
-      this.hideSelectModelContainer();
-    }
   }
 
   showSelectBrandContainer() async {
@@ -95,6 +79,12 @@ class _FilterComponentState extends State<FilterComponent> {
 
       this.hideSelectBrandContainer();
     }
+  }
+
+  void _switchModel(String nm) {
+    setState(() {
+      this._dropDownModelValue = nm;
+    });
   }
 
   _getModels() async {
@@ -124,12 +114,6 @@ class _FilterComponentState extends State<FilterComponent> {
 
     setState(() {
       this.brandsLoading = false;
-    });
-  }
-
-  hideSelectModelContainer() {
-    setState(() {
-      this.isShowingSelectModelContainer = false;
     });
   }
 
@@ -184,24 +168,24 @@ class _FilterComponentState extends State<FilterComponent> {
     );
   }
 
-  showSelectYearBottomSheet() async {
-    Future<Tuple<int, int>> selectedValue = showModalBottomSheet(
-        context: context,
-        builder: (builder) {
-          return YearBottomSheetComponent(this.initYear, this.endYear);
-        });
-    selectedValue.then((value) {
-      if (value != null) {
-        setState(() {
-          this.initYear = value.a;
-          this.endYear = value.b;
-        });
+  // showSelectYearBottomSheet() async {
+  //   Future<Tuple<int, int>> selectedValue = showModalBottomSheet(
+  //       context: context,
+  //       builder: (builder) {
+  //         return YearBottomSheetComponent(this.initYear, this.endYear);
+  //       });
+  //   selectedValue.then((value) {
+  //     if (value != null) {
+  //       setState(() {
+  //         this.initYear = value.a;
+  //         this.endYear = value.b;
+  //       });
 
-        this.newFilter.initYear = initYear;
-        this.newFilter.endYear = endYear;
-      }
-    });
-  }
+  //       this.newFilter.initYear = initYear;
+  //       this.newFilter.endYear = endYear;
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -247,6 +231,38 @@ class _FilterComponentState extends State<FilterComponent> {
                       ),
                     ),
                   ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    child: DropdownButton<String>(
+                      value: _dropDownModelValue,
+                      onChanged: (String newValue) {
+                        _switchModel(newValue);
+                      },
+                      items:
+                          modelList.map<DropdownMenuItem<String>>((Model item) {
+                        return DropdownMenuItem<String>(
+                          value: item.name,
+                          child: Text(item.name),
+                        );
+                      }).toList(),
+                      icon: Icon(Icons.keyboard_arrow_down),
+                      iconSize: 24,
+                      elevation: 16,
+                      isExpanded: true,
+                      underline: Container(
+                        height: 1,
+                        color: Styles.cardColor,
+                      ),
+                      dropdownColor: Styles.cardColor,
+                      style: GoogleFonts.montserrat(
+                        textStyle: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Styles.mainTextColor,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ),
                   // Container(
                   //   width: double.infinity,
                   //   margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
@@ -282,38 +298,38 @@ class _FilterComponentState extends State<FilterComponent> {
                   //     ),
                   //   ),
                   // ),
-                  Container(
-                    width: double.infinity,
-                    margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                    child: Divider(
-                      color: Colors.grey.shade900,
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      showSelectYearBottomSheet();
-                    },
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Ano',
-                            style: Styles.montText,
-                          ),
-                          Text(
-                            'De ' +
-                                this.initYear.toString() +
-                                ' até ' +
-                                this.endYear.toString(),
-                            style: Styles.montTextGrey,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  // Container(
+                  //   width: double.infinity,
+                  //   margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                  //   child: Divider(
+                  //     color: Colors.grey.shade900,
+                  //   ),
+                  // ),
+                  // InkWell(
+                  //   onTap: () {
+                  //     showSelectYearBottomSheet();
+                  //   },
+                  //   child: Container(
+                  //     padding:
+                  //         EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       children: [
+                  //         Text(
+                  //           'Ano',
+                  //           style: Styles.montText,
+                  //         ),
+                  //         Text(
+                  //           'De ' +
+                  //               this.initYear.toString() +
+                  //               ' até ' +
+                  //               this.endYear.toString(),
+                  //           style: Styles.montTextGrey,
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

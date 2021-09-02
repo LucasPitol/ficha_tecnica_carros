@@ -33,7 +33,7 @@ class AutoService {
   }
 
   mockData() {
-    // this._dao.mockData();
+    this._dao.mockData();
   }
 
   Future<ResponseDto> getNews() async {
@@ -106,7 +106,7 @@ class AutoService {
     List<Auto> autos =
         await this._dao.getAutosByBrandAndYear(brandName, initYear, endYear);
 
-    autos.sort((a, b) => b.year.compareTo(a.year));
+    autos.sort((a, b) => b.initYear.compareTo(a.initYear));
 
     res.success = true;
     res.data = autos;

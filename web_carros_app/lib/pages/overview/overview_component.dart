@@ -175,33 +175,39 @@ class _OverviewComponentState extends State<OverviewComponent> {
   }
 
   _getAutoImgLayout() {
+    String endYear = (auto.endYear == null || auto.endYear <= 0)
+        ? 'Presente'
+        : auto.endYear.toString();
+
     return Container(
       margin: EdgeInsets.only(bottom: 20),
       child: Column(
         children: [
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 20),
-            child: Image.network(
-              auto.autoImagePath,
-              fit: BoxFit.cover,
-              // width: 80,
+            // padding: EdgeInsets.symmetric(horizontal: 20),
+            child: InteractiveViewer(
+              child: Image.network(
+                auto.autoImagePath,
+                fit: BoxFit.cover,
+                // width: 80,
+              ),
             ),
           ),
           Container(
             child: Text(
-              auto.brand,
+              auto.brand + ' ' + auto.model,
               style: Styles.tileTitleTextStyle,
             ),
           ),
           Container(
             child: Text(
-              auto.model,
+              auto.version,
               style: Styles.montText,
             ),
           ),
           Container(
             child: Text(
-              auto.version,
+              auto.initYear.toString() + ' - ' + endYear,
               style: Styles.montTextGrey,
             ),
           ),
