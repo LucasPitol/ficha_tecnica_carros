@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:web_carros_app/models/auto.dart';
+import 'package:web_carros_app/models/tuple.dart';
+import 'package:web_carros_app/utils/constants.dart';
 
 class AutoDao {
   final dbReference = FirebaseFirestore.instance;
@@ -23,12 +26,31 @@ class AutoDao {
     return autos;
   }
 
-  Future<List<Auto>> getAutosByBrandAndYear(
-      String brandName, int initYear, int endYear) async {
+  Future<List<Auto>> getAutosByBodywork(List<int> bodyworkList) async {
     List<Auto> autos = [];
 
     await dbReference
         .collection(autosCollectionName)
+        .where('bodywork', whereIn: bodyworkList)
+        .get()
+        .then((snapShot) {
+      snapShot.docs.forEach((item) {
+        var auto = Auto(item);
+
+        autos.add(auto);
+      });
+    });
+
+    return autos;
+  }
+
+  Future<List<Auto>> getAutosByBrand(
+      String brandName, List<int> bodyworkList) async {
+    List<Auto> autos = [];
+
+    await dbReference
+        .collection(autosCollectionName)
+        .where('bodywork', whereIn: bodyworkList)
         .where('brand', isEqualTo: brandName)
         // .where('initYear', isGreaterThanOrEqualTo: initYear)
         // .where('endYear', isLessThanOrEqualTo: endYear)

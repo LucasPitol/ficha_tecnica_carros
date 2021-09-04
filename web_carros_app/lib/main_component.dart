@@ -44,10 +44,7 @@ class MainComponentState extends State<MainComponent> {
       MaterialPageRoute(builder: (context) => FilterComponent(filter)),
     );
 
-
-    if (filtersTemp != null &&
-        filter.brand != null &&
-        filter.brand.name.isNotEmpty) {
+    if (_hasActiveFilters(filtersTemp)) {
       this.filter = filtersTemp;
 
       if (this._selectedIndex == Constants.list_page_index) {
@@ -58,6 +55,21 @@ class MainComponentState extends State<MainComponent> {
         });
       }
     }
+  }
+
+  _hasActiveFilters(FilterDto filterTemp) {
+    bool active = false;
+
+    if (filterTemp != null) {
+      if (filterTemp.bodywork != null) {
+        active = true;
+      }
+
+      if (filterTemp.brand != null && filterTemp.brand.name.isNotEmpty) {
+        active = true;
+      }
+    }
+    return active;
   }
 
   _getScreenOption() {

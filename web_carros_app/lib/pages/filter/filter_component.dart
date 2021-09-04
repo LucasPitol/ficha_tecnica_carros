@@ -4,13 +4,12 @@ import 'package:web_carros_app/pages/shared/loading_block.dart';
 import 'package:web_carros_app/services/brand_service.dart';
 import 'package:web_carros_app/models/dtos/filterDto.dart';
 import 'package:web_carros_app/models/brand.dart';
-import 'package:web_carros_app/models/tuple.dart';
 import 'package:web_carros_app/models/model.dart';
+import 'package:web_carros_app/utils/constants.dart';
 import 'package:web_carros_app/utils/styles.dart';
 import 'package:flutter/material.dart';
 
 import 'select_brand_container.dart';
-import 'year_bottom_sheet_component.dart';
 
 class FilterComponent extends StatefulWidget {
   final FilterDto previousFilter;
@@ -26,8 +25,8 @@ class _FilterComponentState extends State<FilterComponent> {
   FilterDto newFilter;
   BrandService _brandService;
   List<Brand> brandList;
-  List<Model> modelList;
-  String _dropDownModelValue;
+  Map<int, String> bodyworkMap;
+  String _dropDownBodyworkValue;
   bool brandsLoading;
   bool modelsLoading;
   bool isShowingSelectBrandContainer;
@@ -42,12 +41,9 @@ class _FilterComponentState extends State<FilterComponent> {
     this.selectedBrand = previousFilter.brand;
     this.isShowingSelectBrandContainer = false;
     this.brandsLoading = false;
-    this._dropDownModelValue = '718';
+    this._dropDownBodyworkValue = '0';
     this.brandList = [];
-    this.modelList = [
-      Model(brandId: 'PORSCHE', name: '718'),
-      Model(brandId: 'PORSCHE', name: '911')
-    ];
+    this.bodyworkMap = Constants.bodyworkMap;
     this.initYear = previousFilter.initYear;
     this.endYear = previousFilter.endYear;
     this.newFilter.initYear = initYear;
@@ -81,25 +77,9 @@ class _FilterComponentState extends State<FilterComponent> {
     }
   }
 
-  void _switchModel(String nm) {
+  void _switchBodywork(String nb) {
     setState(() {
-      this._dropDownModelValue = nm;
-    });
-  }
-
-  _getModels() async {
-    setState(() {
-      this.modelsLoading = true;
-    });
-
-    String brandId = this.selectedBrand.id;
-
-    var res = await this._brandService.getModelsByBrandId(brandId);
-    print(brandId);
-    this.modelList = res.data;
-
-    setState(() {
-      this.modelsLoading = false;
+      this._dropDownBodyworkValue = nb;
     });
   }
 
@@ -129,6 +109,7 @@ class _FilterComponentState extends State<FilterComponent> {
 
   _applyFilter() {
     this.newFilter.brand = selectedBrand;
+    this.newFilter.bodywork = int.parse(_dropDownBodyworkValue);
     this.newFilter.initYear = initYear;
     this.newFilter.endYear = endYear;
 
@@ -201,7 +182,37 @@ class _FilterComponentState extends State<FilterComponent> {
                   _getAppBar(),
                   SizedBox(
                     width: double.infinity,
-                    height: 20,
+                    height: 10,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    child: DropdownButtonFormField<String>(
+                      decoration:
+                          Styles.getTextFieldDecorationUnderline('Carroceria'),
+                      value: _dropDownBodyworkValue,
+                      onChanged: (String newValue) {
+                        _switchBodywork(newValue);
+                      },
+                      items: bodyworkMap.entries
+                          .map<DropdownMenuItem<String>>((item) {
+                        return DropdownMenuItem<String>(
+                          value: item.key.toString(),
+                          child: Text(item.value),
+                        );
+                      }).toList(),
+                      icon: Icon(Icons.keyboard_arrow_down),
+                      iconSize: 24,
+                      elevation: 16,
+                      isExpanded: true,
+                      dropdownColor: Styles.cardColor,
+                      style: GoogleFonts.montserrat(
+                        textStyle: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Styles.mainTextColor,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
                   ),
                   InkWell(
                     onTap: () {
@@ -209,7 +220,7 @@ class _FilterComponentState extends State<FilterComponent> {
                     },
                     child: Container(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -228,38 +239,6 @@ class _FilterComponentState extends State<FilterComponent> {
                                   style: Styles.montTextGrey,
                                 ),
                         ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    child: DropdownButton<String>(
-                      value: _dropDownModelValue,
-                      onChanged: (String newValue) {
-                        _switchModel(newValue);
-                      },
-                      items:
-                          modelList.map<DropdownMenuItem<String>>((Model item) {
-                        return DropdownMenuItem<String>(
-                          value: item.name,
-                          child: Text(item.name),
-                        );
-                      }).toList(),
-                      icon: Icon(Icons.keyboard_arrow_down),
-                      iconSize: 24,
-                      elevation: 16,
-                      isExpanded: true,
-                      underline: Container(
-                        height: 1,
-                        color: Styles.cardColor,
-                      ),
-                      dropdownColor: Styles.cardColor,
-                      style: GoogleFonts.montserrat(
-                        textStyle: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Styles.mainTextColor,
-                          fontSize: 14,
-                        ),
                       ),
                     ),
                   ),

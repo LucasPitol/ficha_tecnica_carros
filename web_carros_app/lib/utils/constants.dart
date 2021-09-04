@@ -1,8 +1,20 @@
+
 class Constants {
   static const int home_page_index = 0;
   static const int list_page_index = 1;
 
   static const String empty_string = '---';
+
+  static Map<int, String> bodyworkMap = {
+    0: 'Todos',
+    1: 'Conversível',
+    2: 'Coupe',
+    3: 'Hatch',
+    4: 'Perua',
+    5: 'Picape',
+    6: 'Sedan',
+    7: 'SUV',
+  };
 
   static getYears() {
     int initYear = 1900;

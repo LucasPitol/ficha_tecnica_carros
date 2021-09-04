@@ -8,6 +8,7 @@ import 'package:web_carros_app/models/dtos/filterDto.dart';
 import 'package:web_carros_app/models/engine_specs.dart';
 import 'package:web_carros_app/models/auto.dart';
 import 'package:web_carros_app/db/auto_dao.dart';
+import 'package:web_carros_app/utils/constants.dart';
 
 import 'transmission_specs_service.dart';
 import 'performance_specs_service.dart';
@@ -33,7 +34,7 @@ class AutoService {
   }
 
   mockData() {
-    this._dao.mockData();
+    // this._dao.mockData();
   }
 
   Future<ResponseDto> getNews() async {
@@ -99,12 +100,34 @@ class AutoService {
   Future<ResponseDto> getFilteredAutos(FilterDto filter) async {
     ResponseDto res = ResponseDto();
 
-    String brandName = filter.brand.name;
+    String brandName = (filter.brand != null && filter.brand.name.isNotEmpty)
+        ? filter.brand.name
+        : null;
+    int bodywork = filter.bodywork;
     int initYear = filter.initYear;
     int endYear = filter.endYear;
 
-    List<Auto> autos =
-        await this._dao.getAutosByBrandAndYear(brandName, initYear, endYear);
+    List<int> bodyworkList = [];
+
+    List<Auto> autos = [];
+
+    if (bodywork != null) {
+      if (bodywork == 0) {
+        Constants.bodyworkMap.keys.forEach((key) {
+          if (key != 0) {
+            bodyworkList.add(key);
+          }
+        });
+      } else {
+        bodyworkList.add(bodywork);
+      }
+    }
+
+    if (brandName != null) {
+      autos = await this._dao.getAutosByBrand(brandName, bodyworkList);
+    } else {
+      autos = await this._dao.getAutosByBodywork(bodyworkList);
+    }
 
     autos.sort((a, b) => b.initYear.compareTo(a.initYear));
 
