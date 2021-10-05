@@ -34,7 +34,7 @@ class AutoService {
   }
 
   mockData() {
-    // this._dao.mockData();
+    this._dao.mockData();
   }
 
   Future<ResponseDto> getNews() async {

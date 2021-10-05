@@ -102,15 +102,15 @@ class AutoDao {
     batch.set(autoSpecsDocRef, {
       'id': autoId,
       'autoImagePath':
-          'https://firebasestorage.googleapis.com/v0/b/web-carros-3cb2a.appspot.com/o/carImages%2F2021%20(1).png?alt=media&token=5bd5e5cd-9405-4b09-91d0-2ca153dc03f0',
-      'brand': 'Audi',
+          'https://firebasestorage.googleapis.com/v0/b/web-carros-3cb2a.appspot.com/o/carImages%2Fporsche-macan-gtsthumbnail.png?alt=media&token=05d20f63-8281-4c3f-9c17-d2a907b83265',
+      'brand': 'Porsche',
       'brandImagePath':
-          'https://firebasestorage.googleapis.com/v0/b/web-carros-3cb2a.appspot.com/o/brandImages%2FAudi-Logo.png?alt=media&token=aa52242c-9c4d-4e47-8932-3198244239bb',
-      'generation': '8Y',
-      'model': 'A3',
-      'version': 'Prestige 1.4 sedan',
-      'initYear': 2020,
-      'bodywork': 'Sedan',
+          'https://firebasestorage.googleapis.com/v0/b/web-carros-3cb2a.appspot.com/o/brandImages%2FPorsche-Logo.png?alt=media&token=d0d40104-746e-4f01-a3da-17c9e6efc324',
+      'generation': '95B',
+      'model': 'Macan',
+      'version': 'GTS 2.9',
+      'initYear': 2021,
+      'bodywork': 'SUV',
       'creationDate': creationDate,
     });
 
@@ -124,11 +124,11 @@ class AutoDao {
     batch.set(performanceSpecsDocRef, {
       'id': performanceSpecsId,
       'autoId': autoId,
-      'topSpeed': 227,
-      'zeroToHundred': 8.8,
-      'urbanConsumption': 11.7,
-      'highwayConsumption': 14.2,
-      'weightToPowerRatio': 3.7,
+      'topSpeed': 261,
+      'zeroToHundred': 4.7,
+      'urbanConsumption': 7,
+      'highwayConsumption': 9,
+      'weightToPowerRatio': 5.0,
       'creationDate': creationDate,
     });
 
@@ -142,12 +142,12 @@ class AutoDao {
     batch.set(engineSpecsDocRef, {
       'id': engineSpecsId,
       'autoId': autoId,
-      'description': '4 cilindros 1.4 turbo TFSI',
-      'horsePower': 150,
-      'horsePowerRPM': 6750,
-      'torque': 25.5,
-      'torqueRPM': 5000,
-      'maxRPM': 0,
+      'description': 'V6 2.9 turbo',
+      'horsePower': 380,
+      'horsePowerRPM': 5200,
+      'torque': 53,
+      'torqueRPM': 1750,
+      'maxRPM': 6800,
       'engineInstalation': 'Instalação dianteira',
       'creationDate': creationDate,
     });
@@ -162,9 +162,9 @@ class AutoDao {
     batch.set(transmissionSpecsDocRef, {
       'id': transmissionSpecsId,
       'autoId': autoId,
-      'traction': 'Tração dianteira',
-      'code': 'Tiptronic',
-      'gearbox': 'Automatizado de 6 marchas',
+      'traction': 'Tração integral',
+      'code': 'PDK',
+      'gearbox': 'Automatizado de 7 marchas',
       'gearShift': 'Embreagem dupla banhada a óleo',
       'creationDate': creationDate,
     });
@@ -179,11 +179,11 @@ class AutoDao {
     batch.set(dimensionsSpecsDocRef, {
       'id': dimensionsSpecsId,
       'autoId': autoId,
-      'length': 4456,
-      'width': 1796,
-      'height': 1416,
-      'weight': 1240,
-      'trunkCapacity': 425,
+      'length': 4686,
+      'width': 1926,
+      'height': 1609,
+      'weight': 1910,
+      'trunkCapacity': 488,
       'creationDate': creationDate,
     });
 
@@ -197,11 +197,11 @@ class AutoDao {
     batch.set(aditionalSpecsDocRef, {
       'id': aditionalSpecsId,
       'autoId': autoId,
-      'cylinderCapacity': 1395,
-      'lengthBetweenAxis': 2729,
-      'fuelCapacity': 50,
-      'engineCode': 'M139',
-      'generation': '8Y',
+      'cylinderCapacity': 2894,
+      'lengthBetweenAxis': 2807,
+      'fuelCapacity': 65,
+      'engineCode': '',
+      'generation': '95B',
       'creationDate': creationDate,
     });
 

@@ -55,9 +55,9 @@ class Styles {
   );
 
   static Text appTitle = Text(
-    'Web Carros',
-    style: GoogleFonts.varela(
-      fontSize: 22,
+    'RID',
+    style: GoogleFonts.racingSansOne(
+      fontSize: 26,
       fontWeight: FontWeight.bold,
       color: mainTextColor,
     ),
