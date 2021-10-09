@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:web_carros_app/pages/settings/settings_component.dart';
 import 'package:web_carros_app/utils/styles.dart';
 
 class AppBarWidget extends StatefulWidget {
@@ -39,8 +40,12 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   }
 
   _goToSettings() {
-    print('settings');
-    // this._autoService.mockData();
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SettingsComponent(),
+      ),
+    );
   }
 
   @override

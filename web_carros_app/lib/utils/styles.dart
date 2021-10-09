@@ -63,6 +63,15 @@ class Styles {
     ),
   );
 
+  static Text appTitleMainColor = Text(
+    'RID',
+    style: GoogleFonts.racingSansOne(
+      fontSize: 26,
+      fontWeight: FontWeight.bold,
+      color: primaryColor
+    ),
+  );
+
   static BorderRadius circularBorderRadius =
       BorderRadius.all(Radius.circular(100));
 
