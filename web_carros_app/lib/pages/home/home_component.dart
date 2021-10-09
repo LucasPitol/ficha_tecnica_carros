@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:web_carros_app/models/auto.dart';
 import 'package:web_carros_app/pages/overview/overview_component.dart';
+import 'package:web_carros_app/pages/shared/app_bar_widget.dart';
 import 'package:web_carros_app/pages/shared/loading_widget.dart';
 import 'package:web_carros_app/services/auto_service.dart';
 import 'package:web_carros_app/services/local_storage_service.dart';
@@ -79,41 +80,6 @@ class _HomeComponentState extends State<HomeComponent> {
         this.loadingFavorites = false;
       });
     });
-  }
-
-  _goToSettings() {
-    print('settings');
-    // this._autoService.mockData();
-  }
-
-  _getAppBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          margin: EdgeInsets.only(left: 20),
-          child: Styles.appTitle,
-        ),
-        Container(
-          alignment: Alignment.topRight,
-          margin: EdgeInsets.all(10),
-          child: InkWell(
-            borderRadius: Styles.circularBorderRadius,
-            onTap: () {
-              this._goToSettings();
-            },
-            child: Container(
-              margin: EdgeInsets.all(10),
-              child: FaIcon(
-                FontAwesomeIcons.bars,
-                size: 22,
-                color: Styles.mainTextColor,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
   }
 
   _getSectionTitle(String title) {
@@ -244,7 +210,7 @@ class _HomeComponentState extends State<HomeComponent> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  _getAppBar(),
+                  AppBarWidget(),
                   // News
                   loadingNewsAndTrend
                       ? Container(
