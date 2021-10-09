@@ -1,5 +1,4 @@
 import 'package:animations/animations.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:web_carros_app/models/auto.dart';
 import 'package:web_carros_app/models/dtos/filterDto.dart';
 import 'package:web_carros_app/pages/overview/overview_component.dart';

@@ -12,8 +12,8 @@ class SettingsMenuItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        this.handlerFunction();
+      onTap: () async {
+        await this.handlerFunction();
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),

@@ -53,18 +53,11 @@ class _SettingsComponentState extends State<SettingsComponent> {
   _goToInstagram() async {
     var url = Constants.instagramUrl;
 
-    if (await canLaunch(url)) {
-      await launch(
-        url,
-        universalLinksOnly: true,
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Erro ao abrir instagram'),
-        ),
-      );
-    }
+    await launch(
+      url,
+      forceSafariVC: false,
+      universalLinksOnly: true,
+    );
   }
 
   _openAboutModal() async {

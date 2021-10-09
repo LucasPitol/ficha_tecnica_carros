@@ -9,7 +9,7 @@ class Styles {
       selectionColor: primaryColor,
     ),
     primaryColor: primaryColor,
-    accentColor: darkColor,
+    hintColor: darkColor,
     scaffoldBackgroundColor: mainBackgroundColor,
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: primaryColor,
