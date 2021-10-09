@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:web_carros_app/pages/shared/loading_block.dart';
 import 'package:web_carros_app/utils/styles.dart';
+
+import 'settings_menu_item_widget.dart';
 
 class SettingsComponent extends StatefulWidget {
   @override
@@ -8,6 +12,8 @@ class SettingsComponent extends StatefulWidget {
 }
 
 class _SettingsComponentState extends State<SettingsComponent> {
+  bool loading = false;
+
   Widget _getAppBar() {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -42,17 +48,72 @@ class _SettingsComponentState extends State<SettingsComponent> {
     Navigator.pop(context);
   }
 
+  _openAboutModal() async {
+    setState(() {
+      this.loading = true;
+    });
+
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    String appName = packageInfo.appName;
+    String appVersion = packageInfo.version;
+
+    setState(() {
+      this.loading = false;
+    });
+
+    showAboutDialog(
+      context: context,
+      applicationName: appName,
+      applicationVersion: appVersion,
+      // applicationIcon: Container(
+      //   child: Image.asset(
+      //     'assets/ic_launcher.png',
+      //     width: 50,
+      //   ),
+      // ),
+      children: [
+        Container(
+          child: Text(
+            'Apenas consulta de ficha técnica? \nNovidades em breve.',
+            style: TextStyle(color: Colors.grey.shade800),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Styles.mainBackgroundColor,
       body: SafeArea(
-        child: Column(
+        child: Stack(
           children: [
-            SizedBox(
-              child: _getAppBar(),
+            Column(
+              children: [
+                SizedBox(
+                  child: _getAppBar(),
+                ),
+                SizedBox(
+                  height: 40,
+                  width: double.infinity,
+                ),
+                SizedBox(
+                  child: Column(
+                    children: [
+                      SettingsMenuItemWidget(
+                        icon: FontAwesomeIcons.infoCircle,
+                        label: 'Sobre',
+                        handlerFunction: _openAboutModal,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
+            LoadingBlock(this.loading)
           ],
         ),
       ),
