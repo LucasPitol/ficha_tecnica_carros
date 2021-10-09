@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:web_carros_app/pages/shared/loading_block.dart';
+import 'package:web_carros_app/utils/constants.dart';
 import 'package:web_carros_app/utils/styles.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'settings_menu_item_widget.dart';
 
@@ -46,6 +48,23 @@ class _SettingsComponentState extends State<SettingsComponent> {
 
   _goBack() {
     Navigator.pop(context);
+  }
+
+  _goToInstagram() async {
+    var url = Constants.instagramUrl;
+
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        universalLinksOnly: true,
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Erro ao abrir instagram'),
+        ),
+      );
+    }
   }
 
   _openAboutModal() async {
@@ -103,6 +122,11 @@ class _SettingsComponentState extends State<SettingsComponent> {
                 SizedBox(
                   child: Column(
                     children: [
+                      SettingsMenuItemWidget(
+                        icon: FontAwesomeIcons.instagram,
+                        label: 'Instagram',
+                        handlerFunction: _goToInstagram,
+                      ),
                       SettingsMenuItemWidget(
                         icon: FontAwesomeIcons.infoCircle,
                         label: 'Sobre',

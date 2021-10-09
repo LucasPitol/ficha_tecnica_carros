@@ -5,6 +5,8 @@ class Constants {
 
   static const String empty_string = '---';
 
+  static const String instagramUrl = 'https://www.instagram.com/minadouro24k/';
+
   static Map<int, String> bodyworkMap = {
     0: 'Todos',
     1: 'Conversível',

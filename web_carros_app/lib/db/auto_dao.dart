@@ -1,8 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:web_carros_app/models/auto.dart';
-import 'package:web_carros_app/models/tuple.dart';
-import 'package:web_carros_app/utils/constants.dart';
 
 class AutoDao {
   final dbReference = FirebaseFirestore.instance;

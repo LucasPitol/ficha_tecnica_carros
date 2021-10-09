@@ -12,5 +12,5 @@ class AutoSpecsDto {
   DimensionsSpecs dimensionsSpecs;
   AditionalSpecs aditionalSpecs;
 
-  AutoSpecsDto() {}
+  AutoSpecsDto();
 }
