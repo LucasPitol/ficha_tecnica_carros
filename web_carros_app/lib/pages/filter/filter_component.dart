@@ -53,6 +53,13 @@ class _FilterComponentState extends State<FilterComponent> {
   @override
   void initState() {
     super.initState();
+    this._setBodywork();
+  }
+
+  _setBodywork() {
+    if (this.newFilter.bodywork != null) {
+      this._switchBodywork(this.newFilter.bodywork.toString());
+    }
   }
 
   showSelectBrandContainer() async {
