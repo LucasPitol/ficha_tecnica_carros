@@ -8,6 +8,9 @@ class Styles {
       selectionHandleColor: primaryColor,
       selectionColor: primaryColor,
     ),
+    colorScheme: ColorScheme.fromSwatch().copyWith(
+      secondary: darkColor, // Your accent color
+    ),
     primaryColor: primaryColor,
     hintColor: darkColor,
     scaffoldBackgroundColor: mainBackgroundColor,
@@ -66,10 +69,7 @@ class Styles {
   static Text appTitleMainColor = Text(
     'RID',
     style: GoogleFonts.racingSansOne(
-      fontSize: 26,
-      fontWeight: FontWeight.bold,
-      color: primaryColor
-    ),
+        fontSize: 26, fontWeight: FontWeight.bold, color: primaryColor),
   );
 
   static BorderRadius circularBorderRadius =
@@ -84,7 +84,7 @@ class Styles {
 
   static BoxDecoration specsBoxDecoration = BoxDecoration(
     color: cardColor,
-    borderRadius:  BorderRadius.all(Radius.circular(24)),
+    borderRadius: BorderRadius.all(Radius.circular(24)),
   );
 
   static getTextFieldDecorationUnderline(String value) {

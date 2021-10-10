@@ -118,10 +118,6 @@ class _OverviewComponentState extends State<OverviewComponent> {
                         this.zeroToHundredStr,
                       ),
                       HeaderInfoSpecItem(
-                        FontAwesomeIcons.dollarSign,
-                        this.fipeStr,
-                      ),
-                      HeaderInfoSpecItem(
                         FontAwesomeIcons.weightHanging,
                         this.weightStr,
                       ),
