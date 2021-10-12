@@ -12,7 +12,7 @@ class Auto extends AbstractModel {
   String brand;
   String model;
   String version;
-  String autoImagePath;
+  List<dynamic> autoImagePathList;
   String brandImagePath;
   int bodywork;
   double fipe;
@@ -37,7 +37,7 @@ class Auto extends AbstractModel {
       this.brand = objMapp['brand'];
       this.model = objMapp['model'];
       this.version = objMapp['version'];
-      this.autoImagePath = objMapp['autoImagePath'];
+      this.autoImagePathList = objMapp['autoImagePathList'];
       this.brandImagePath = objMapp['brandImagePath'];
       this.initYear = objMapp['initYear'];
       this.endYear = objMapp['endYear'];

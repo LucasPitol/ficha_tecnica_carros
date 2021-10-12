@@ -104,8 +104,6 @@ class AutoService {
         ? filter.brand.name
         : null;
     int bodywork = filter.bodywork;
-    int initYear = filter.initYear;
-    int endYear = filter.endYear;
 
     List<int> bodyworkList = [];
 

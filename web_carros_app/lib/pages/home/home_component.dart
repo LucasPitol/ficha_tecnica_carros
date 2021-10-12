@@ -93,6 +93,10 @@ class _HomeComponentState extends State<HomeComponent> {
   }
 
   Widget _createHorizontalCard(Auto item) {
+    String autoImage = (item.autoImagePathList.length >= 3)
+        ? item.autoImagePathList[2]
+        : item.autoImagePathList[0];
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: OpenContainer(
@@ -116,7 +120,7 @@ class _HomeComponentState extends State<HomeComponent> {
               children: [
                 Container(
                   child: Image.network(
-                    item.autoImagePath,
+                    autoImage,
                     fit: BoxFit.cover,
                     width: 150,
                   ),
@@ -188,7 +192,7 @@ class _HomeComponentState extends State<HomeComponent> {
               isThreeLine: true,
               trailing: Container(
                 child: Image.network(
-                  item.autoImagePath,
+                  item.autoImagePathList[0],
                   fit: BoxFit.cover,
                   width: 150,
                 ),

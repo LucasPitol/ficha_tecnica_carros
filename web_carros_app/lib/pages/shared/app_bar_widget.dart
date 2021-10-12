@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:web_carros_app/db/auto_dao.dart';
 import 'package:web_carros_app/pages/settings/settings_component.dart';
 import 'package:web_carros_app/utils/styles.dart';
 
@@ -24,6 +25,8 @@ class _AppBarWidgetState extends State<AppBarWidget> {
             borderRadius: Styles.circularBorderRadius,
             onTap: () {
               this._goToSettings();
+              // AutoDao autoDao = AutoDao();
+              // autoDao.mockData();
             },
             child: Container(
               margin: EdgeInsets.all(10),

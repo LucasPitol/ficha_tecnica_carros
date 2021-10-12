@@ -183,7 +183,7 @@ class _OverviewComponentState extends State<OverviewComponent> {
             // padding: EdgeInsets.symmetric(horizontal: 20),
             child: InteractiveViewer(
               child: Image.network(
-                auto.autoImagePath,
+                auto.autoImagePathList[0],
                 fit: BoxFit.cover,
                 // width: 80,
               ),

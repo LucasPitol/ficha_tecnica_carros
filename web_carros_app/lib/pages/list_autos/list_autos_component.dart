@@ -114,7 +114,7 @@ class ListAutosComponentState extends State<ListAutosComponent> {
               isThreeLine: true,
               trailing: Container(
                 child: Image.network(
-                  item.autoImagePath,
+                  item.autoImagePathList[0],
                   fit: BoxFit.cover,
                   width: 150,
                 ),

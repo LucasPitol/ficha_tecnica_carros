@@ -98,16 +98,21 @@ class AutoDao {
 
     batch.set(autoSpecsDocRef, {
       'id': autoId,
-      'autoImagePath':
-          'https://firebasestorage.googleapis.com/v0/b/web-carros-3cb2a.appspot.com/o/carImages%2Fporsche-macan-gtsthumbnail.png?alt=media&token=05d20f63-8281-4c3f-9c17-d2a907b83265',
+      'autoImagePathList': [
+        'https://firebasestorage.googleapis.com/v0/b/web-carros-3cb2a.appspot.com/o/carImages%2Fporsche-911-carrera-s-991-lado-removebg-preview.png?alt=media&token=a6934971-aa61-4e66-87e6-33e5ca5ea3bb',
+        'https://firebasestorage.googleapis.com/v0/b/web-carros-3cb2a.appspot.com/o/carImages%2Fporsche-911-carrera-s-991-frente-removebg-preview.png?alt=media&token=f99931c3-2248-42d3-8ad6-a9312604b46a',
+        'https://firebasestorage.googleapis.com/v0/b/web-carros-3cb2a.appspot.com/o/carImages%2Fporsche-911-carrera-s-991-removebg-preview.png?alt=media&token=e59c00a5-03c3-4ab3-be7f-6677495222aa',
+        'https://firebasestorage.googleapis.com/v0/b/web-carros-3cb2a.appspot.com/o/carImages%2Fporsche-911-carrera-s-991-tras-removebg-preview.png?alt=media&token=f10c9127-4735-4cbd-81c3-a3deb6a42bd3',
+      ],
       'brand': 'Porsche',
       'brandImagePath':
           'https://firebasestorage.googleapis.com/v0/b/web-carros-3cb2a.appspot.com/o/brandImages%2FPorsche-Logo.png?alt=media&token=d0d40104-746e-4f01-a3da-17c9e6efc324',
-      'generation': '95B',
-      'model': 'Macan',
-      'version': 'GTS 2.9',
-      'initYear': 2021,
-      'bodywork': 'SUV',
+      'generation': '991',
+      'model': '911',
+      'version': 'Carrera S',
+      'initYear': 2011,
+      'endYear': 2019,
+      'bodywork': 2,
       'creationDate': creationDate,
     });
 
@@ -121,11 +126,11 @@ class AutoDao {
     batch.set(performanceSpecsDocRef, {
       'id': performanceSpecsId,
       'autoId': autoId,
-      'topSpeed': 261,
-      'zeroToHundred': 4.7,
-      'urbanConsumption': 7,
+      'topSpeed': 302,
+      'zeroToHundred': 4.3,
+      'urbanConsumption': 6.5,
       'highwayConsumption': 9,
-      'weightToPowerRatio': 5.0,
+      'weightToPowerRatio': 3.5,
       'creationDate': creationDate,
     });
 
@@ -139,13 +144,13 @@ class AutoDao {
     batch.set(engineSpecsDocRef, {
       'id': engineSpecsId,
       'autoId': autoId,
-      'description': 'V6 2.9 turbo',
-      'horsePower': 380,
-      'horsePowerRPM': 5200,
-      'torque': 53,
-      'torqueRPM': 1750,
-      'maxRPM': 6800,
-      'engineInstalation': 'Instalação dianteira',
+      'description': '6 cilindros 3.8 Aspirado',
+      'horsePower': 400,
+      'horsePowerRPM': 7400,
+      'torque': 44.9,
+      'torqueRPM': 5600,
+      'maxRPM': 0,
+      'engineInstalation': 'Instalação traseira',
       'creationDate': creationDate,
     });
 
@@ -159,7 +164,7 @@ class AutoDao {
     batch.set(transmissionSpecsDocRef, {
       'id': transmissionSpecsId,
       'autoId': autoId,
-      'traction': 'Tração integral',
+      'traction': 'Tração traseira',
       'code': 'PDK',
       'gearbox': 'Automatizado de 7 marchas',
       'gearShift': 'Embreagem dupla banhada a óleo',
@@ -176,11 +181,11 @@ class AutoDao {
     batch.set(dimensionsSpecsDocRef, {
       'id': dimensionsSpecsId,
       'autoId': autoId,
-      'length': 4686,
-      'width': 1926,
-      'height': 1609,
-      'weight': 1910,
-      'trunkCapacity': 488,
+      'length': 4491,
+      'width': 1808,
+      'height': 1295,
+      'weight': 1415,
+      'trunkCapacity': 340,
       'creationDate': creationDate,
     });
 
@@ -194,11 +199,11 @@ class AutoDao {
     batch.set(aditionalSpecsDocRef, {
       'id': aditionalSpecsId,
       'autoId': autoId,
-      'cylinderCapacity': 2894,
-      'lengthBetweenAxis': 2807,
-      'fuelCapacity': 65,
+      'cylinderCapacity': 3800,
+      'lengthBetweenAxis': 2450,
+      'fuelCapacity': 64,
       'engineCode': '',
-      'generation': '95B',
+      'generation': '991',
       'creationDate': creationDate,
     });
 
