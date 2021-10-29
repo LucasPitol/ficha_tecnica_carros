@@ -1,5 +1,7 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:web_carros_app/models/ad_helper.dart';
 import 'package:web_carros_app/models/auto.dart';
 import 'package:flutter/material.dart';
 import 'package:web_carros_app/pages/shared/loading_widget.dart';
@@ -29,6 +31,10 @@ class _OverviewComponentState extends State<OverviewComponent> {
     initialPage: 0,
   );
 
+  final _autoPageViewController = PageController(
+    initialPage: 0,
+  );
+
   Auto auto;
   AutoService _autoService;
   LocalStorageService _localStorageService;
@@ -38,6 +44,9 @@ class _OverviewComponentState extends State<OverviewComponent> {
   String fipeStr;
   String weightStr;
   bool autoAlreadySaved;
+
+  BannerAd _bannerAd;
+  bool _isBannerAdReady = false;
 
   _OverviewComponentState(this.auto) {
     this._autoService = AutoService();
@@ -53,8 +62,37 @@ class _OverviewComponentState extends State<OverviewComponent> {
   @override
   void initState() {
     super.initState();
+    this._loadBannerAd();
     this._getAutoSpecs();
     this._verifyFavorite();
+  }
+
+  @override
+  void dispose() {
+    _bannerAd.dispose();
+    super.dispose();
+  }
+
+  _loadBannerAd() {
+    _bannerAd = BannerAd(
+      adUnitId: AdHelper.bannerAdUnitId,
+      request: AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (_) {
+          setState(() {
+            _isBannerAdReady = true;
+          });
+        },
+        onAdFailedToLoad: (ad, err) {
+          print('Failed to load a banner ad: ${err.message}');
+          _isBannerAdReady = false;
+          ad.dispose();
+        },
+      ),
+    );
+
+    _bannerAd.load();
   }
 
   _goBack() {
@@ -175,18 +213,27 @@ class _OverviewComponentState extends State<OverviewComponent> {
         ? 'Presente'
         : auto.endYear.toString();
 
+    List<dynamic> imgPathList = this.auto.autoImagePathList;
+
     return Container(
       margin: EdgeInsets.only(bottom: 20),
       child: Column(
         children: [
           Container(
-            // padding: EdgeInsets.symmetric(horizontal: 20),
-            child: InteractiveViewer(
-              child: Image.network(
-                auto.autoImagePathList[0],
-                fit: BoxFit.cover,
-                // width: 80,
-              ),
+            margin: EdgeInsets.symmetric(vertical: 50),
+            width: double.infinity,
+            height: 150,
+            child: PageView(
+              controller: this._autoPageViewController,
+              scrollDirection: Axis.horizontal,
+              children: imgPathList
+                  .map(
+                    (e) => Image.network(
+                      e,
+                      fit: BoxFit.cover,
+                    ),
+                  )
+                  .toList(),
             ),
           ),
           Container(
@@ -324,6 +371,15 @@ class _OverviewComponentState extends State<OverviewComponent> {
       body: SafeArea(
         child: Column(
           children: [
+            if (_isBannerAdReady)
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  width: _bannerAd.size.width.toDouble(),
+                  height: _bannerAd.size.height.toDouble(),
+                  child: AdWidget(ad: _bannerAd),
+                ),
+              ),
             _getAppBar(),
             Flexible(
               child: SingleChildScrollView(

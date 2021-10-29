@@ -99,19 +99,19 @@ class AutoDao {
     batch.set(autoSpecsDocRef, {
       'id': autoId,
       'autoImagePathList': [
-        'https://firebasestorage.googleapis.com/v0/b/web-carros-3cb2a.appspot.com/o/carImages%2Fporsche-911-carrera-s-991-lado-removebg-preview.png?alt=media&token=a6934971-aa61-4e66-87e6-33e5ca5ea3bb',
-        'https://firebasestorage.googleapis.com/v0/b/web-carros-3cb2a.appspot.com/o/carImages%2Fporsche-911-carrera-s-991-frente-removebg-preview.png?alt=media&token=f99931c3-2248-42d3-8ad6-a9312604b46a',
-        'https://firebasestorage.googleapis.com/v0/b/web-carros-3cb2a.appspot.com/o/carImages%2Fporsche-911-carrera-s-991-removebg-preview.png?alt=media&token=e59c00a5-03c3-4ab3-be7f-6677495222aa',
-        'https://firebasestorage.googleapis.com/v0/b/web-carros-3cb2a.appspot.com/o/carImages%2Fporsche-911-carrera-s-991-tras-removebg-preview.png?alt=media&token=f10c9127-4735-4cbd-81c3-a3deb6a42bd3',
+        'https://firebasestorage.googleapis.com/v0/b/web-carros-3cb2a.appspot.com/o/carImages%2Fm8-2020-side-removebg-preview.png?alt=media&token=65f76d2d-349b-403c-a9cf-b362e02fb19a',
+        'https://firebasestorage.googleapis.com/v0/b/web-carros-3cb2a.appspot.com/o/carImages%2Fm8-2020-front-removebg-preview.png?alt=media&token=940a84f4-d875-4c05-8e5a-7f91a717ea55',
+        'https://firebasestorage.googleapis.com/v0/b/web-carros-3cb2a.appspot.com/o/carImages%2Fm8-2020-intro-removebg-preview.png?alt=media&token=2699ed0a-4f2e-4db3-a5b8-de137e2f88b4',
+        'https://firebasestorage.googleapis.com/v0/b/web-carros-3cb2a.appspot.com/o/carImages%2Fm8-2020-back-removebg-preview.png?alt=media&token=9437f730-7e3e-4683-b841-cd6e12ea55b1',
       ],
-      'brand': 'Porsche',
+      'brand': 'BMW',
       'brandImagePath':
-          'https://firebasestorage.googleapis.com/v0/b/web-carros-3cb2a.appspot.com/o/brandImages%2FPorsche-Logo.png?alt=media&token=d0d40104-746e-4f01-a3da-17c9e6efc324',
-      'generation': '991',
-      'model': '911',
-      'version': 'Carrera S',
-      'initYear': 2011,
-      'endYear': 2019,
+          'https://firebasestorage.googleapis.com/v0/b/web-carros-3cb2a.appspot.com/o/brandImages%2Fbmw-m.png?alt=media&token=fae752b2-d7f3-4a09-aa85-682933e2f9c3',
+      'generation': 'G16',
+      'model': 'M8',
+      'version': 'Gran Coupe Competition',
+      'initYear': 2018,
+      // 'endYear': 2020,
       'bodywork': 2,
       'creationDate': creationDate,
     });
@@ -126,11 +126,11 @@ class AutoDao {
     batch.set(performanceSpecsDocRef, {
       'id': performanceSpecsId,
       'autoId': autoId,
-      'topSpeed': 302,
-      'zeroToHundred': 4.3,
-      'urbanConsumption': 6.5,
-      'highwayConsumption': 9,
-      'weightToPowerRatio': 3.5,
+      'topSpeed': 305,
+      'zeroToHundred': 3.3,
+      'urbanConsumption': 6.6,
+      'highwayConsumption': 8.7,
+      'weightToPowerRatio': 3.2,
       'creationDate': creationDate,
     });
 
@@ -144,13 +144,13 @@ class AutoDao {
     batch.set(engineSpecsDocRef, {
       'id': engineSpecsId,
       'autoId': autoId,
-      'description': '6 cilindros 3.8 Aspirado',
-      'horsePower': 400,
-      'horsePowerRPM': 7400,
-      'torque': 44.9,
-      'torqueRPM': 5600,
-      'maxRPM': 0,
-      'engineInstalation': 'Instalação traseira',
+      'description': 'V8 4.4 Turbo',
+      'horsePower': 625,
+      'horsePowerRPM': 6000,
+      'torque': 76.5,
+      'torqueRPM': 1800,
+      'maxRPM': 7300,
+      'engineInstalation': 'Instalação dianteira',
       'creationDate': creationDate,
     });
 
@@ -164,10 +164,10 @@ class AutoDao {
     batch.set(transmissionSpecsDocRef, {
       'id': transmissionSpecsId,
       'autoId': autoId,
-      'traction': 'Tração traseira',
-      'code': 'PDK',
-      'gearbox': 'Automatizado de 7 marchas',
-      'gearShift': 'Embreagem dupla banhada a óleo',
+      'traction': 'Tração integral',
+      'code': 'ZF 8HP',
+      'gearbox': 'Automático de 8 marchas',
+      'gearShift': 'Conversor de torque',
       'creationDate': creationDate,
     });
 
@@ -181,11 +181,11 @@ class AutoDao {
     batch.set(dimensionsSpecsDocRef, {
       'id': dimensionsSpecsId,
       'autoId': autoId,
-      'length': 4491,
-      'width': 1808,
-      'height': 1295,
-      'weight': 1415,
-      'trunkCapacity': 340,
+      'length': 5098,
+      'width': 1943,
+      'height': 1420,
+      'weight': 1980,
+      'trunkCapacity': 440,
       'creationDate': creationDate,
     });
 
@@ -199,11 +199,11 @@ class AutoDao {
     batch.set(aditionalSpecsDocRef, {
       'id': aditionalSpecsId,
       'autoId': autoId,
-      'cylinderCapacity': 3800,
-      'lengthBetweenAxis': 2450,
-      'fuelCapacity': 64,
-      'engineCode': '',
-      'generation': '991',
+      'cylinderCapacity': 4395,
+      'lengthBetweenAxis': 3027,
+      'fuelCapacity': 68,
+      'engineCode': 'S63B44',
+      'generation': 'G16',
       'creationDate': creationDate,
     });
 

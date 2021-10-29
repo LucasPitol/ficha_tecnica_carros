@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:web_carros_app/pages/shared/loading_widget.dart';
 
 import 'models/dtos/filterDto.dart';
 import 'pages/filter/filter_component.dart';
@@ -98,11 +100,42 @@ class MainComponentState extends State<MainComponent> {
     });
   }
 
+  // Future<InitializationStatus> _initGoogleMobileAds() {
+  //   return MobileAds.instance.initialize();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Styles.mainBackgroundColor,
+      // body: FutureBuilder(
+      //   future: _initGoogleMobileAds(),
+      //   builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+      //     if (snapshot.hasData) {
+      //       //////
+      //       List<String> testDeviceIds = ['3C1D1E219E8F3888FFE1E04B63476530'];
+      //       RequestConfiguration configuration =
+      //           RequestConfiguration(testDeviceIds: testDeviceIds);
+      //       MobileAds.instance.updateRequestConfiguration(configuration);
+      //       //////
+
+      //       return SafeArea(
+      //         child: _getScreenOption(),
+      //       );
+      //     } else if (snapshot.hasError) {
+      //       return Icon(
+      //         Icons.error_outline,
+      //         color: Colors.red,
+      //         size: 60,
+      //       );
+      //     } else {
+      //       return SizedBox(
+      //         child: LoadingWidget(),
+      //       );
+      //     }
+      //   },
+      // ),
       body: SafeArea(
         child: _getScreenOption(), //_widgetOptions.elementAt(_selectedIndex),
       ),

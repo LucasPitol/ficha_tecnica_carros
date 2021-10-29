@@ -1,5 +1,7 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:web_carros_app/models/ad_helper.dart';
 import 'package:web_carros_app/pages/shared/loading_block.dart';
 import 'package:web_carros_app/services/brand_service.dart';
 import 'package:web_carros_app/models/dtos/filterDto.dart';
@@ -35,6 +37,9 @@ class _FilterComponentState extends State<FilterComponent> {
   int initYear;
   int endYear;
 
+  BannerAd _bannerAd;
+  bool _isBannerAdReady = false;
+
   _FilterComponentState(this.previousFilter) {
     this._brandService = BrandService();
     this.newFilter = previousFilter;
@@ -53,7 +58,36 @@ class _FilterComponentState extends State<FilterComponent> {
   @override
   void initState() {
     super.initState();
+    this._loadBannerAd();
     this._setBodywork();
+  }
+
+  @override
+  void dispose() {
+    _bannerAd.dispose();
+    super.dispose();
+  }
+
+  _loadBannerAd() {
+    _bannerAd = BannerAd(
+      adUnitId: AdHelper.bannerAdUnitId,
+      request: AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (_) {
+          setState(() {
+            _isBannerAdReady = true;
+          });
+        },
+        onAdFailedToLoad: (ad, err) {
+          print('Failed to load a banner ad: ${err.message}');
+          _isBannerAdReady = false;
+          ad.dispose();
+        },
+      ),
+    );
+
+    _bannerAd.load();
   }
 
   _setBodywork() {
@@ -186,6 +220,15 @@ class _FilterComponentState extends State<FilterComponent> {
             SingleChildScrollView(
               child: Column(
                 children: [
+                  if (_isBannerAdReady)
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: Container(
+                        width: _bannerAd.size.width.toDouble(),
+                        height: _bannerAd.size.height.toDouble(),
+                        child: AdWidget(ad: _bannerAd),
+                      ),
+                    ),
                   _getAppBar(),
                   SizedBox(
                     width: double.infinity,

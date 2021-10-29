@@ -5,7 +5,7 @@ class Constants {
 
   static const String empty_string = '---';
 
-  static const String instagramUrl = 'https://www.instagram.com/rid_cars_/';
+  static const String instagramUrl = 'https://www.instagram.com/ridcars_/';
 
   static Map<int, String> bodyworkMap = {
     0: 'Todos',
